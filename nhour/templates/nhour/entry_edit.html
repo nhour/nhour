@@ -1,0 +1,41 @@
+{% load staticfiles %}
+
+{% if form.errors %}
+{% for error in form.errors.values %}
+<div class="errors">
+    <div style="float: left;">
+        <i class="fa fa-exclamation-triangle"></i>
+    </div>
+    <div style="float: right;">
+        {{ error }}
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+<form class="pure-form pure-form-stacked" method="post" style="margin-top: 8px;">
+    {% csrf_token %}
+    <div class="blueback">
+        <fieldset>
+            <div id="entry-edit-form">
+                {% for field in form %}
+                <div class="fieldWrapper">
+                    {{ field.label_tag }} {{ field }}
+                    {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <label for="slider">Hours: <span id="hours-selected"></span></label>
+            <input id="hours" type="hidden" name="hours">
+
+            <div id="slider"></div>
+
+        </fieldset>
+    </div>
+    <button type="submit" class="pure-button save" style="box-shadow: 2px 2px 3px #888888;"><i class="fa fa-plus"></i>
+        Add
+    </button>
+</form>
+<script src="{% static 'ui_slider.js'%}" async></script>

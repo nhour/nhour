@@ -1,0 +1,18 @@
+<div class="blueback" style="margin-bottom:7px;">
+    <div class="pure-g" style="margin-bottom:5px;">
+        <div class="pure-u-2-24"><i class="fa fa-clock-o"></i></div>
+        <div class="pure-u-7-24">System</div>
+        <div class="pure-u-7-24">Project</div>
+        <div class="pure-u-7-24">Task</div>
+    </div>
+    {% for entry in entries %}
+        <div class="pure-g blueback blueback-lighter" style="margin-bottom:8px;">
+            <div class="pure-u-2-24">{{ entry.hours }}</div>
+            <div class="pure-u-7-24">{{ entry.system }}</div>
+            <div class="pure-u-7-24">{{ entry.project }}</div>
+            <div class="pure-u-7-24">{{ entry.task }}</div>
+            <a style="float: right; margin-right: 5px;"><i class="fa fa-trash"></i></a>
+        </div>
+    {% endfor %}
+    Total: {{ total_hours }}
+</div>
