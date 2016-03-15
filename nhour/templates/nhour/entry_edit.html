@@ -1,12 +1,8 @@
 {% load staticfiles %}
-
 {% if form.errors %}
 {% for error in form.errors.values %}
 <div class="errors">
     <div style="float: left;">
-        <i class="fa fa-exclamation-triangle"></i>
-    </div>
-    <div style="float: right;">
         {{ error }}
     </div>
 </div>

@@ -15,6 +15,10 @@ def index_redirect(request):
     return redirect('edit_week', today.year, today.isocalendar()[1], 1)
 
 
+def register(request):
+    return render(request, "registration/registration_form.html")
+
+
 def edit_week(request, year, week, user):
     if request.method == 'POST':
         form = EntryForm(request.POST)

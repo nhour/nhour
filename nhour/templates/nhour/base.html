@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <script src="{% static 'nouislider/nouislider.js'%}" async></script>
+    <script src="{% static 'jquery-2.1.4.min.js'%}" async></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'pure-min.css' %}">
+    <link rel="stylesheet" href="{% static 'nouislider/nouislider.css' %}">
+    <link rel="stylesheet" href="{% static 'font-awesome-4.5.0/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'common.css'%}">
+    <link href='https://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+<div class="pure-menu pure-menu-horizontal" style="background-color: #2196F3; box-shadow: 3px 3px 3px #888888;">
+    <a href="/" style="color: #FFFFFF; " class="pure-menu-heading pure-menu-link">nHour</a>
+    <ul class="pure-menu-list">
+        <li class="pure-menu-item"><a style="color: #FFFFFF; " href="#" class="pure-menu-link">Statistics</a></li>
+    </ul>
+</div>
+{% block content %}
+{% endblock %}
+</body>
+</html>
