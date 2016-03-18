@@ -1,4 +1,4 @@
 django==1.9
 gunicorn
 dj-database-url
-
+psycopg2
