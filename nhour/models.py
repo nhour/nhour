@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
 import re
-from gi.overrides.keysyms import blank
 
 from django.core.exceptions import ValidationError
 from django.db import models
