@@ -30,6 +30,10 @@
     font-family: 'Droid Sans', sans-serif;
   }
 
+.required {
+    color: red;
+}
+
 #container {
     margin:    0 auto;
     max-width: 500px;

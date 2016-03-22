@@ -1,14 +1,4 @@
 {% load staticfiles %}
-{% if form.errors %}
-{% for error in form.errors.values %}
-<div class="errors">
-    <div style="float: left;">
-        {{ error }}
-    </div>
-</div>
-{% endfor %}
-{% endif %}
-
 <form class="pure-form pure-form-stacked" method="post" style="margin-top: 8px;">
     {% csrf_token %}
     <div class="blueback">
@@ -16,10 +6,17 @@
             <div id="entry-edit-form">
                 {% for field in form %}
                 <div class="fieldWrapper">
-                    {{ field.label_tag }} {{ field }}
-                    {% if field.help_text %}
-                    <p class="help">{{ field.help_text|safe }}</p>
-                    {% endif %}
+
+                    <label for="{{ field.auto_id }}">
+                        {{ field.label }}
+                        {% if field.field.required %}
+                            <span class="required">*</span>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <span class="required" style="float: right;">{{ error }}</span>
+                        {% endfor %}
+                    </label>
+                    {{ field }}
                 </div>
                 {% endfor %}
             </div>
@@ -37,4 +34,5 @@
 <script src="{% static 'ui_slider.js'%}"></script>
 <script>
 $(document).ready(createSlider());
+
 </script>

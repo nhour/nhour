@@ -5,9 +5,9 @@ from nhour.models import Entry, System, Project, Task
 
 
 class EntryForm(ModelForm):
-    system = forms.ModelChoiceField(System.objects.all(), empty_label="Select a system", error_messages={'required': 'System is a required field!'})
+    system = forms.ModelChoiceField(System.objects.all(), empty_label="Select a system", error_messages={'required': 'Required!'})
     project = forms.ModelChoiceField(Project.objects.all(), empty_label="Select a project", required=False)
-    task = forms.ModelChoiceField(Task.objects.all(), empty_label="Select a task", error_messages={'required': 'Task is a required field!'})
+    task = forms.ModelChoiceField(Task.objects.all(), empty_label="Select a task", error_messages={'required': 'Required!'})
     user = forms.HiddenInput()
     week = forms.HiddenInput()
     year = forms.HiddenInput()
