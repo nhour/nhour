@@ -34,4 +34,7 @@
         Add
     </button>
 </form>
-<script src="{% static 'ui_slider.js'%}" async></script>
+<script src="{% static 'ui_slider.js'%}"></script>
+<script>
+    $("#slider").ready(createSlider());
+</script>
