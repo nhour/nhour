@@ -43,4 +43,4 @@ class TestWeekNameGeneration(TestCase):
         self.assertTrue(date_range_of_week(2016, 10), (datetime.date(2016, 3, 7), datetime.date(2016, 3, 13)))
 
     def test_date_range_is_in_the_name(self):
-        self.assertIn("2016-03-07 - 2016-03-13", week_name("2016", "10"))
+        self.assertIn("2016-03-07 – 2016-03-13", week_name("2016", "10"))

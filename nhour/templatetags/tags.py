@@ -1,3 +1,4 @@
+# coding=utf-8
 from django import template
 from django.core.urlresolvers import reverse
 from django.db.models import Sum
@@ -37,4 +38,4 @@ def next_week_url(year, week, user):
 @register.simple_tag
 def week_name(year, week):
     first_date, last_date = date_range_of_week(year, week)
-    return "{} - {}".format(first_date.isoformat(), last_date.isoformat())
+    return "{} – {}".format(first_date.isoformat(), last_date.isoformat())
