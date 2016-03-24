@@ -32,11 +32,6 @@ class TestWeekPaging(TestCase):
         self.assertEqual(next_week_url("2015", "33", "1"), '/edit/2015/34/1')
 
 class TestWeekNameGeneration(TestCase):
-    #
-    # def test_week_number_and_year_is_in_the_name(self):
-    #     self.assertIn("week 11", week_name("2013", "11"))
-    #     self.assertIn("week 9", week_name("2013", "9"))
-
 
     def test_date_range_of_week_start_and_end_dates_are_correct(self):
         start, end = date_range_of_week(2016, 10)

@@ -11,7 +11,7 @@
             <div class="pure-u-7-24">{{ entry.system }}</div>
             <div class="pure-u-7-24">{{ entry.project }}</div>
             <div class="pure-u-7-24">{{ entry.task }}</div>
-            <a style="float: right; margin-right: 5px;"><i class="fa fa-trash"></i></a>
+            <a style="float: right; margin-right: 5px;" href={% url 'delete' entry.year entry.week entry.user entry.id %}><i class="fa fa-trash"></i></a>
         </div>
     {% endfor %}
     Total: {{ total_hours }}

@@ -1,6 +1,8 @@
 from decimal import Decimal
 
 import datetime
+
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db.models import Sum
 from django.http import HttpResponseRedirect
@@ -18,6 +20,12 @@ def index_redirect(request):
 def register(request):
     return render(request, "registration/registration_form.html")
 
+def delete_entry(request, year, week, user, id):
+    try:
+        Entry.objects.get(id=id).delete()
+    except ObjectDoesNotExist:
+        pass
+    return redirect('edit_week', year, week, user)
 
 def edit_week(request, year, week, user):
     if request.method == 'POST':

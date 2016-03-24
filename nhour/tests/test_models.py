@@ -1,9 +1,9 @@
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.test import TestCase
 from nhour.models import Entry, Task, Project, System
 
 
-class TestEntryValidation(TestCase):
+class TestEntry(TestCase):
 
     def setUp(self):
         self.test_system = System.objects.create(name='Test1')
@@ -47,4 +47,22 @@ class TestEntryValidation(TestCase):
     def test_system_is_printed_in_human_readable_form(self):
         self.assertEqual(self.test_task.__str__(), "Test3")
 
+    def test_removing_entries_works(self):
+        entry = Entry.objects.create(
+            week=9,
+            year=2015,
+            hours=4,
+            system=self.test_system,
+            project=self.test_project,
+            task=self.test_task,
+            user=1)
+        Entry.objects.get(id=entry.id)  # success
 
+        entry.delete()
+
+        self.assertRaises(ObjectDoesNotExist, Entry.objects.get, id=entry.id)
+
+        # These should still exist
+        System.objects.get(id=self.test_system.id)
+        Project.objects.get(id=self.test_project.id)
+        Task.objects.get(id=self.test_task.id)
