@@ -2,13 +2,14 @@ from decimal import Decimal
 
 import datetime
 
+from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db.models import Sum
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from nhour.forms import EntryForm
+from nhour.forms import EntryForm, RegisterForm
 from nhour.models import Entry, System, Project, Task
 
 
@@ -17,7 +18,8 @@ def index_redirect(request):
     return redirect('edit_week', today.year, today.isocalendar()[1], 1)
 
 def register(request):
-    return render(request, "registration/registration_form.html")
+    register_form = RegisterForm(instance=User())
+    return render(request, "registration/registration_form.html", context={'register_form': register_form})
 
 def delete_entry(request, year, week, user, id):
     try:
