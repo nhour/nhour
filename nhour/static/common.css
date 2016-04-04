@@ -3,6 +3,7 @@
     color: #212121;
     padding: 4px;
     box-shadow: 2px 2px 3px #888888;
+    border-radius: 5px;
 }
 
 .blueback-lighter {
@@ -16,6 +17,11 @@
 
 .save {
     margin-top:8px;
+    box-shadow: 2px 2px 3px #888888;
+}
+
+.save-register {
+    box-shadow: 2px 2px 3px #888888;
 }
 
 .errors {
@@ -35,7 +41,7 @@
 }
 
 #container {
-    margin:    0 auto;
+    margin: 10px auto;
     max-width: 500px;
 }
 
@@ -43,9 +49,23 @@
     width: 100%;
 }
 
+.pure-form-legend-without-border {
+    border-bottom: 0px;
+}
+
+.entry-list-remove-entry {
+}
+
 .centered {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
+}
+
+.entry-list-delete-entry {
+    background:none;
+    border:none;
+    margin:0;
+    padding:0;
 }

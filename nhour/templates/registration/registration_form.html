@@ -1,37 +1,67 @@
 {% extends 'nhour/base.html' %}
 {% block content %}
+<div id="container">
+    <form class="pure-form pure-form-stacked">
+        <legend>Login</legend>
+        <div class="pure-g">
+            <div class="pure-u-1-2">
+                <div class="pure-control-group">
+                    <label for="name">Username</label>
+                    <input id="name" type="text" placeholder="Username">
+                </div>
 
-<form class="pure-form pure-form-aligned centered">
-    <fieldset>
-        <div class="pure-control-group">
-            <label for="name">Username</label>
-            <input id="name" type="text" placeholder="Username">
+            </div>
+            <div class="pure-u-1-2">
+                <div class="pure-control-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" placeholder="Password">
+                </div>
+            </div>
         </div>
-        <div class="pure-control-group">
-            <label for="password">Password</label>
-            <input id="password" type="password" placeholder="Password">
-        </div>
+        <label for="remember-me" class="pure-checkbox">
+            <input id="remember-me" type="checkbox"> Remember me?
+        </label>
 
-        <div class="pure-control-group">
-            <label for="password-again">Password again</label>
-            <input id="password-again" type="password" placeholder="Password again">
-        </div>
-        <div class="pure-control-group">
-            <label for="email">Email Address</label>
-            <input id="email" type="email" placeholder="Email Address">
-        </div>
-        <div class="pure-control-group">
-            <label for="first-name">First Name</label>
-            <input id="first-name" type="text" placeholder="Enter something here...">
-        </div>
-        <div class="pure-control-group">
-            <label for="last-name">Last Name</label>
-            <input id="last-name" type="text" placeholder="Enter something here...">
+        <button type="submit" class="pure-button pure-button-primary save-register">Submit</button>
+
+    </form>
+
+    <form class="pure-form pure-form-stacked register-form" method="post"> {% csrf_token %}
+        <legend>Register</legend>
+        <div class="pure-g">
+            <div class="pure-u-1-2">
+                <div class="pure-control-group">
+                    <label for="name">Username</label>
+                    <input id="name" type="text" placeholder="Username">
+                </div>
+                <div class="pure-control-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" placeholder="Password">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="password-again">Password again</label>
+                    <input id="password-again" type="password" placeholder="Password again">
+                </div>
+            </div>
+            <div class="pure-u-1-2">
+                <div class="pure-control-group">
+                    <label for="email">Email Address</label>
+                    <input id="email" type="email" placeholder="Email Address">
+                </div>
+                <div class="pure-control-group">
+                    <label for="first-name">First Name</label>
+                    <input id="first-name" type="text" placeholder="Enter something here...">
+                </div>
+                <div class="pure-control-group">
+                    <label for="last-name">Last Name</label>
+                    <input id="last-name" type="text" placeholder="Enter something here...">
+                </div>
+            </div>
         </div>
         <div class="pure-controls">
-            <button type="submit" class="pure-button pure-button-primary">Submit</button>
+            <button type="submit" class="pure-button pure-button-primary save-register">Submit</button>
         </div>
-    </fieldset>
-</form>
-
+    </form>
+</div>
 {% endblock %}

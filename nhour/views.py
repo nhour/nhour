@@ -16,7 +16,6 @@ def index_redirect(request):
     today = datetime.datetime.today()
     return redirect('edit_week', today.year, today.isocalendar()[1], 1)
 
-
 def register(request):
     return render(request, "registration/registration_form.html")
 
