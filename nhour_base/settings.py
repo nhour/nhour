@@ -130,9 +130,7 @@ STATIC_URL = '/static/'
 #     os.path.join(PROJECT_ROOT, '../nhour/static'),
 # )
 
-if os.environ.get("NHOUR_STAGING", "FALSE") == "TRUE":
-    SECURE_SSL_REDIRECT = True
-    import dj_database_url
-    db_from_env = dj_database_url.config()
-    DATABASES['default'].update(db_from_env)
-    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+import dj_database_url
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
