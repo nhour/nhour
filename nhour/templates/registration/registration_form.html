@@ -31,28 +31,48 @@
         <div class="pure-g">
             <div class="pure-u-1-2">
                 <div class="pure-control-group">
-                    {{ register_form.username.errors }}
-                    <label for="{{register_form.username.id_for_label }}">Username</label>
+                    <label for="{{ register_form.username.id_for_label }}">Username</label>
                     {{ register_form.username }}
+                    {% for error in register_form.username.errors %}
+                        <span class="required">{{ error }}</span>
+                    {% endfor %}
                 </div>
                 <div class="pure-control-group">
-                    {{ register_form.username.errors }}
-                    <label for="{{register_form.password.id_for_label }}">Password</label>
+                    <label for="{{ register_form.password.id_for_label }}">Password</label>
                     {{ register_form.password }}
+                    {% for error in register_form.password.errors %}
+                        <span class="required">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="pure-control-group">
+                    <label for="{{ register_form.password_again.id_for_label }}">Password again</label>
+                    {{ register_form.password_again }}
+                    {% for error in register_form.password_again.errors %}
+                        <span class="required">{{ error }}</span>
+                    {% endfor %}
                 </div>
             </div>
             <div class="pure-u-1-2">
                 <div class="pure-control-group">
-                    <label for="email">Email Address</label>
-                    <input id="email" type="email" placeholder="Email Address">
+                    <label for="{{ register_form.email.id_for_label }}">Email</label>
+                    {{ register_form.password }}
+                    {% for error in register_form.email.errors %}
+                        <span class="required">{{ error }}</span>
+                    {% endfor %}
                 </div>
                 <div class="pure-control-group">
-                    <label for="first-name">First Name</label>
-                    <input id="first-name" type="text" placeholder="Enter something here...">
+                    <label for="{{ register_form.first_name.id_for_label }}">First name</label>
+                    {{ register_form.first_name }}
+                    {% for error in register_form.first_name.errors %}
+                        <span class="required">{{ error }}</span>
+                    {% endfor %}
                 </div>
                 <div class="pure-control-group">
-                    <label for="last-name">Last Name</label>
-                    <input id="last-name" type="text" placeholder="Enter something here...">
+                    <label for="{{ register_form.last_name.id_for_label }}">Last name</label>
+                    {{ register_form.last_name }}
+                    {% for error in register_form.last_name.errors %}
+                        <span class="required">{{ error }}</span>
+                    {% endfor %}
                 </div>
             </div>
         </div>

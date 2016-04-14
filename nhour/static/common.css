@@ -45,8 +45,15 @@
     max-width: 500px;
 }
 
-#entry-edit-form select {
+#entry-edit-form select, textarea {
     width: 100%;
+}
+#entry-edit-form textarea {
+    resize: none;
+}
+
+.pure-form select {
+    height: 40px;
 }
 
 .pure-form-legend-without-border {
