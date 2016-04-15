@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+
 from nhour.models import System, Project, Task
 
 

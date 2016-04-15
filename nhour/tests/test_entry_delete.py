@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
@@ -19,6 +20,8 @@ class TestEntryDelete(TestCase):
             task=data.test_task,
             user=1)
         self.c = Client()
+        User.objects.create_user(username="testuser", email="ex@ex.com", password="Testpassword", first_name="Test", last_name="User")
+        self.c.login(username="testuser", password="Testpassword")
 
     def test_nothing_is_deleted_if_invalid_id_is_given(self):
         self.c.post(reverse("delete", args=[2015, 9, 1, self.entry.id + 1]))

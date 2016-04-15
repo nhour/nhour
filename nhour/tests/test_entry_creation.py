@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.test import TestCase, Client
 
 from nhour.forms import EntryForm
@@ -8,6 +9,8 @@ class TestEntryEditPage(TestCase):
 
     def setUp(self):
         self.c = Client()
+        User.objects.create_user(username="testuser", email="ex@ex.com", password="Testpassword", first_name="Test", last_name="User")
+        self.c.login(username="testuser", password="Testpassword")
 
         self.system_A = System.objects.create(name="A")
         self.system_B = System.objects.create(name="B")
