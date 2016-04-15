@@ -6,7 +6,7 @@ from nhour import models
 from . import views
 
 urlpatterns = [
-    url(r'^login/$', login, name='login'),
+    url(r'^login', login, name='login'),
     url(r'^delete/([0-9]{4})/([0-9]{1,2})/([0-9]*)/([0-9]*)$', views.delete_entry, name='delete'),
     url(r'^edit/([0-9]{4})/([0-9]{1,2})/([0-9]*)$', views.edit_week, name='edit_week'),
     url(r'^$', views.index_redirect),
