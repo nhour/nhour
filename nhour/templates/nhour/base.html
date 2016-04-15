@@ -11,15 +11,28 @@
     <link rel="stylesheet" href="{% static 'nouislider/nouislider.css' %}">
     <link rel="stylesheet" href="{% static 'font-awesome-4.5.0/css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'common.css'%}">
-    <link href='https://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
 </head>
 <body>
 <div class="pure-menu pure-menu-horizontal" style="background-color: #2196F3; box-shadow: 3px 3px 3px #888888;">
-    <a href="/" style="color: #FFFFFF; " class="pure-menu-heading pure-menu-link">nHour</a>
-    <ul class="pure-menu-list">
-        <li class="pure-menu-item"><a style="color: #FFFFFF; " href="#" class="pure-menu-link">Statistics</a></li>
-        <li class="pure-menu-item"><a style="color: #FFFFFF;" href="/admin" class="pure-menu-link">Administration</a></li>
+    <ul class="pure-menu-list" style="width: 100%">
+        <div class="menu-left">
+            <li class="pure-menu-item"><a href="/" style="color: #FFFFFF; " class="pure-menu-heading pure-menu-link">nHour</a></li>
+            <li class="pure-menu-item"><a style="color: #FFFFFF; " href="#" class="pure-menu-link">Statistics</a></li>
+            <li class="pure-menu-item"><a style="color: #FFFFFF;" href="/admin"
+                                          class="pure-menu-link">Administration</a>
+            </li>
+        </div>
+        <div class="menu-right">
+            {% if not user.is_anonymous %}
+            <li class="pure-menu-item"><a style="color: #FFFFFF;" href="{% url 'logout' %}" class="pure-menu-link">Log
+                Out</a>
+            </li>
+        </div>
+
+
+        {% endif %}
     </ul>
 </div>
 {% block content %}

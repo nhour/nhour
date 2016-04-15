@@ -128,7 +128,8 @@ STATIC_URL = '/static/'
 # STATICFILES_DIRS = (
 #     os.path.join(PROJECT_ROOT, '../nhour/static'),
 # )
-
+LOGIN_URL = "/login"
+LOGIN_REDIRECT_URL = "/"
 import dj_database_url
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)

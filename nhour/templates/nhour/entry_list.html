@@ -1,20 +1,30 @@
-<div class="blueback" style="margin-bottom:7px;">
-    <div class="pure-g" style="margin-bottom:5px;">
-        <div class="pure-u-2-24"><i class="fa fa-clock-o"></i></div>
-        <div class="pure-u-7-24">System</div>
-        <div class="pure-u-7-24">Project</div>
-        <div class="pure-u-7-24">Task</div>
-    </div>
+<table class="blueback pure-table entry-list">
+    <tr>
+        <th><i class="fa fa-clock-o"></i></th>
+        <th>System</th>
+        <th>Project</th>
+        <th>Task</th>
+        <th></th>
+    </tr>
     {% for entry in entries %}
-        <div class="pure-g blueback blueback-lighter" style="margin-bottom:8px;">
-            <div class="pure-u-2-24">{{ entry.hours }}</div>
-            <div class="pure-u-7-24">{{ entry.system }}</div>
-            <div class="pure-u-7-24">{{ entry.project }}</div>
-            <div class="pure-u-7-24">{{ entry.task }}</div>
-            <form method="post" class="pure-u-1-24" action={% url 'delete' entry.year entry.week entry.user entry.id %}> {% csrf_token %}
+        <tr class="blueback blueback-lighter" style="margin-bottom:10px;">
+
+            <td>{{ entry.hours }}</td>
+            <td>{{ entry.system }}</td>
+            <td><div style="overflow: hidden;">{{ entry.project }}</div></td>
+            <td>{{ entry.task }}</td>
+            <td style="text-align: right;"><form method="post" action={% url 'delete' entry.year entry.week entry.user entry.id %}> {% csrf_token %}
                 <button type="submit" class="entry-list-delete-entry"><i class="fa fa-trash"></i></button>
-            </form>
-        </div>
+            </form></td>
+
+        </tr>
     {% endfor %}
-    Total: {{ total_hours }}
-</div>
+    {% if total_hours %}
+        <tfoot>
+            <tr>
+               <td style="padding: 0;">Total: {{ total_hours }}</td>
+            </tr>
+        </tfoot>
+    {% endif %}
+</table>
+

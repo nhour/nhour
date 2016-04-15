@@ -33,7 +33,7 @@
 }
 
 * {
-    font-family: 'Droid Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
   }
 
 .required {
@@ -42,7 +42,7 @@
 
 #container {
     margin: 10px auto;
-    max-width: 500px;
+    max-width: 550px;
 }
 
 #entry-edit-form select, textarea {
@@ -60,9 +60,6 @@
     border-bottom: 0px;
 }
 
-.entry-list-remove-entry {
-}
-
 .centered {
     position: absolute;
     top: 50%;
@@ -70,9 +67,28 @@
     transform: translateX(-50%) translateY(-50%);
 }
 
+.entry-list {
+    border-collapse:separate;
+    border-spacing:0 8px; width: 100%;
+    table-layout: fixed;
+}
+
+.entry-list th {
+    text-align: left;
+}
+
+
 .entry-list-delete-entry {
     background:none;
     border:none;
     margin:0;
     padding:0;
+}
+
+.menu-left{
+    float: left;
+}
+
+.menu-right{
+    float: right;
 }
