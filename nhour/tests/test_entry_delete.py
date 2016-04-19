@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
+from model_mommy import mommy
 
 from nhour.models import Entry
 from nhour.tests.test_data import TestData
@@ -11,14 +12,7 @@ class TestEntryDelete(TestCase):
 
     def setUp(self):
         data = TestData()
-        self.entry = Entry.objects.create(
-            week=9,
-            year=2015,
-            hours=4,
-            system=data.test_system,
-            project=data.test_project,
-            task=data.test_task,
-            user=1)
+        self.entry = mommy.make(Entry, week=20, year=1994)
         self.c = Client()
         User.objects.create_user(username="testuser", email="ex@ex.com", password="Testpassword", first_name="Test", last_name="User")
         self.c.login(username="testuser", password="Testpassword")

@@ -4,6 +4,7 @@ from django.test import TestCase, Client
 from nhour.forms import EntryForm
 from nhour.models import Entry, System, Project, Task
 
+from model_mommy import mommy
 
 class TestEntryEditPage(TestCase):
 
@@ -12,23 +13,16 @@ class TestEntryEditPage(TestCase):
         User.objects.create_user(username="testuser", email="ex@ex.com", password="Testpassword", first_name="Test", last_name="User")
         self.c.login(username="testuser", password="Testpassword")
 
-        self.system_A = System.objects.create(name="A")
-        self.system_B = System.objects.create(name="B")
-        self.project_B = Project.objects.create(name="B")
-        self.task_B = Task.objects.create(name="B")
-        self.task_C = Task.objects.create(name="C")
+        self.system_A = mommy.make(System)
+        self.system_B = mommy.make(System)
+        self.project_B = mommy.make(Project)
+        self.task_B = mommy.make(Task)
+        self.task_C = mommy.make(Task)
 
-        self.test_entry_1 = Entry(week=9, year=2015, system=self.system_A, project=self.project_B, task=self.task_C, user="1", hours=3)
-        self.test_entry_1.save()
-
-        self.test_entry_2 = Entry(week=9, year=2015, system=self.system_B, project=self.project_B, task=self.task_B, user="1", hours=2)
-        self.test_entry_2.save()
-
-        self.test_entry_3 = Entry(week=10, year=2015, system=self.system_B, project=self.project_B, task=self.task_B, user="1", hours=1)
-        self.test_entry_3.save()
-
-        self.test_entry_4 = Entry(week=9, year=2015, system=self.system_B, project=self.project_B, task=self.task_B, user="12", hours=2)
-        self.test_entry_4.save()
+        self.test_entry_1 = mommy.make(Entry, week=9, year=2015, user="1")
+        self.test_entry_2 = mommy.make(Entry, week=9, year=2015, user="1")
+        self.test_entry_3 = mommy.make(Entry, week=12, year=2015, user="1")
+        self.test_entry_4 = mommy.make(Entry, week=9, year=2015, user="12")
 
     def test_opening_edit_page_with_week_parameter(self):
         self.assertEquals(self.c.get('/edit/2015/9/1/').status_code, 200)
