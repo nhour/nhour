@@ -24,12 +24,12 @@ class TestWeekPaging(TestCase):
         self.assertEquals((2013, 52), decrement_week(2014, 1))
 
     def test_previous_week_url_tag_generates_a_url_pointing_to_the_previous_week(self):
-        self.assertEqual(previous_week_url(2015, 33, 1), '/edit/2015/32/1')
-        self.assertEqual(previous_week_url("2015", "33", "1"), '/edit/2015/32/1')
+        self.assertEqual(previous_week_url(2015, 33, 1), '/edit/2015/32/1/')
+        self.assertEqual(previous_week_url("2015", "33", "1"), '/edit/2015/32/1/')
 
     def test_next_week_url_tag_generates_a_url_pointing_to_the_next_week(self):
-        self.assertEqual(next_week_url(2015, 33, 1), '/edit/2015/34/1')
-        self.assertEqual(next_week_url("2015", "33", "1"), '/edit/2015/34/1')
+        self.assertEqual(next_week_url(2015, 33, 1), '/edit/2015/34/1/')
+        self.assertEqual(next_week_url("2015", "33", "1"), '/edit/2015/34/1/')
 
 class TestWeekNameGeneration(TestCase):
 

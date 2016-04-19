@@ -26,4 +26,4 @@ class TestRoutes(TestCase):
         now = datetime.datetime.today()
         current_week = now.isocalendar()[1]
         self.assertEqual(root.status_code, 302)
-        self.assertEqual(root.url, "/edit/{}/{}/1".format(now.year, current_week))
+        self.assertEqual(root.url, "/edit/{}/{}/1/".format(now.year, current_week))

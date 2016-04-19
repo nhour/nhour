@@ -8,9 +8,8 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db.models import Sum
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
-
+from django.http import HttpResponseRedirect, Http404
+from django.shortcuts import render, redirect, get_object_or_404
 from nhour.forms import EntryForm, RegisterForm
 from nhour.models import Entry, System, Project, Task
 
@@ -31,18 +30,31 @@ def register(request):
         register_form = RegisterForm(instance=User())
     return render(request, "registration/register.html", context={'register_form': register_form})
 
+def edit_entry(request, entry=None):
+    entry_object = get_object_or_404(Entry, id=entry)
+    return edit_week(request, entry_object.year, entry_object.week, entry_object.user, entry)
+
+
+def _redirect_to_entry_list(entry):
+    return redirect(reverse("edit_week", args=[entry.year, entry.week, entry.user]))
+
 
 @login_required()
-def delete_entry(request, year, week, user, id):
-    try:
-        Entry.objects.get(id=id).delete()
-    except ObjectDoesNotExist:
-        pass
-    return redirect('edit_week', year, week, user)
-
+def save_entry(request, entry_id):
+    form = EntryForm(request.POST, instance=get_object_or_404(Entry, id=entry_id))
+    if form.is_valid():
+        form.save()
+    entry = form.instance
+    return _redirect_to_entry_list(entry)
 
 @login_required()
-def edit_week(request, year, week, user):
+def delete_entry(request, entry_id):
+    deleted_entry = get_object_or_404(Entry, id=entry_id)
+    deleted_entry.delete()
+    return _redirect_to_entry_list(deleted_entry)
+
+@login_required()
+def edit_week(request, year, week, user, entry=None):
     if request.method == 'POST':
         form = EntryForm(request.POST)
         if form.is_valid():
@@ -54,10 +66,15 @@ def edit_week(request, year, week, user):
             new_entry.save()
             return redirect('edit_week', year, week, user)
     else:
-        form = EntryForm(instance=Entry(user=user, week=week))
+        try:
+            editable_entry = Entry.objects.get(id=entry)
+        except ObjectDoesNotExist:
+            editable_entry = Entry(user=user, week=week)
+        form = EntryForm(instance=editable_entry)
     entries = Entry.objects.filter(week=week, user=user)
     return render(request, "nhour/index.html", context={'entries': entries,
                                                         'week': week,
                                                         'user': user,
                                                         'form': form,
-                                                        'year': year})
+                                                        'year': year,
+                                                        'total_hours': entries.aggregate(Sum('hours'))['hours__sum']})

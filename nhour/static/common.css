@@ -44,7 +44,6 @@
     margin: 10px auto;
     max-width: 550px;
 }
-
 #entry-edit-form select, textarea {
     width: 100%;
 }
@@ -83,6 +82,17 @@
     border:none;
     margin:0;
     padding:0;
+}
+.entry-list-row {
+    margin-bottom: 10px;
+}
+
+.entry-list-row:hover {
+    background-color: #bbb;
+}
+
+.entry-list-row td{
+    overflow: hidden;
 }
 
 .menu-left{

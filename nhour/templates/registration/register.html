@@ -1,6 +1,9 @@
 {% extends 'nhour/base.html' %}
 {% block content %}
 <div id="container">
+    {% for error in register_form.non_field_errors %}
+        <span class="required">{{ error }}</span>
+    {% endfor %}
     <form class="pure-form pure-form-stacked register-form" method="post"> {% csrf_token %}
         <legend>Register</legend>
         <div class="pure-g">

@@ -1,30 +1,31 @@
 <table class="blueback pure-table entry-list">
     <tr>
-        <th><i class="fa fa-clock-o"></i></th>
+        <th style="width: 10%;"><i class="fa fa-clock-o"></i></th>
         <th>System</th>
         <th>Project</th>
         <th>Task</th>
-        <th></th>
     </tr>
     {% for entry in entries %}
-        <tr class="blueback blueback-lighter" style="margin-bottom:10px;">
-
-            <td>{{ entry.hours }}</td>
+        <tr class="blueback blueback-lighter entry-list-row" data-value="{{ entry.id }}">
+            <td style="text-align: center;">{{ entry.hours }}</td>
             <td>{{ entry.system }}</td>
-            <td><div style="overflow: hidden;">{{ entry.project }}</div></td>
+            <td>{{ entry.project }}</td>
             <td>{{ entry.task }}</td>
-            <td style="text-align: right;"><form method="post" action={% url 'delete' entry.year entry.week entry.user entry.id %}> {% csrf_token %}
-                <button type="submit" class="entry-list-delete-entry"><i class="fa fa-trash"></i></button>
-            </form></td>
-
         </tr>
     {% endfor %}
     {% if total_hours %}
-        <tfoot>
-            <tr>
-               <td style="padding: 0;">Total: {{ total_hours }}</td>
-            </tr>
-        </tfoot>
+    <tfoot>
+    <tr>
+        <td style="padding: 0;">Total: {{ total_hours }}</td>
+    </tr>
+    </tfoot>
     {% endif %}
 </table>
-
+<script>
+    $(".entry-list-row").click(
+        function(click) {
+            selected_entry = $(click.delegateTarget).data("value")
+            window.location.assign("{% url 'edit_week' %}" + selected_entry);
+        }
+    )
+</script>

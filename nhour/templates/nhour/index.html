@@ -6,8 +6,9 @@ Nhour
 {% block content %}
 <div class="">
     <div id="container">
-        <a href={% previous_week_url year week user %}><i class="fa fa-arrow-left"></i></a> {% week_name year week %} <a href={% next_week_url year week user %}><i class="fa fa-arrow-right"></i></a>
-        {% entry_list entries %}
+        Juho Lamminmäki <a href={% previous_week_url year week user %}><i class="fa fa-arrow-left"></i></a> {% week_name year week %} <a href={% next_week_url year week user %}><i class="fa fa-arrow-right"></i></a>
+
+        {% include 'entry_list.html' %}
         {% include 'entry_edit.html'%}
     </div>
 </div>

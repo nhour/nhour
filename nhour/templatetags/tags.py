@@ -9,12 +9,6 @@ from nhour.utils import decrement_week, increment_week, date_range_of_week
 
 register = template.Library()
 
-
-@register.inclusion_tag('nhour/entry_list.html')
-def entry_list(entries):
-    return {'entries': entries, 'total_hours': entries.aggregate(Sum('hours'))['hours__sum']}
-
-
 def _arguments_into_int(user, week, year):
     year = int(year)
     week = int(week)
