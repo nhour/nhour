@@ -1,6 +1,6 @@
 django==1.9
-gunicorn
+gunicorn==0.4.0
 dj-database-url
-psycopg2
-whitenoise
-model-mommy
+psycopg2==2.6.1
+whitenoise==3.0
+model-mommy==1.2.6
