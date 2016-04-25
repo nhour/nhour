@@ -48,5 +48,11 @@
 </form>
 <script src="{% static 'ui_slider.js'%}"></script>
 <script>
-$(document).ready(createSlider());
+
+{% if form.instance.id %}
+    defaultHours = {{ form.instance.hours }}
+{% else %}
+    defaultHours = 10;
+{% endif %}
+$(document).ready(createSlider(defaultHours));
 </script>

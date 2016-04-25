@@ -30,6 +30,7 @@ def register(request):
         register_form = RegisterForm(instance=User())
     return render(request, "registration/register.html", context={'register_form': register_form})
 
+
 def edit_entry(request, entry=None):
     entry_object = get_object_or_404(Entry, id=entry)
     return edit_week(request, entry_object.year, entry_object.week, entry_object.user, entry)
@@ -43,7 +44,9 @@ def _redirect_to_entry_list(entry):
 def save_entry(request, entry_id):
     form = EntryForm(request.POST, instance=get_object_or_404(Entry, id=entry_id))
     if form.is_valid():
-        form.save()
+        entry = form.save(commit=False)
+        entry.hours = Decimal(request.POST['hours'])
+        entry.save()
     entry = form.instance
     return _redirect_to_entry_list(entry)
 

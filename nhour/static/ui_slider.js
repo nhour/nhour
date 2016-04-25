@@ -1,9 +1,9 @@
-function createSlider() {
+function createSlider(start) {
     var slider = document.getElementById('slider');
     var selectedHours = document.getElementById('hours-selected');
 
     noUiSlider.create(slider, {
-        start: 10,
+        start: start,
         behaviour: 'tap',
         connect: 'lower',
         range: {

@@ -1,10 +1,14 @@
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 
 from nhour.forms import EntryForm
 from nhour.models import Entry, System, Project, Task
 
 from model_mommy import mommy
+
+from nhour.views import save_entry
+
 
 class TestEntryEditPage(TestCase):
 
@@ -101,6 +105,15 @@ class TestEntryEditPage(TestCase):
     def test_edit_page_with_selected_entry_returns_a_page_with_the_selected_entry_editable(self):
         response = self.c.get('/edit/{}/'.format(self.test_entry_1.id))
         self.assertEqual(response.context['form'].instance.id, self.test_entry_1.id)
+
+    def test_editing_entry_change_hours(self):
+        self.c.post(reverse("save_entry", args=[self.test_entry_1.id]), data={'hours': '15',
+                                                                              'system': self.test_entry_1.system.id,
+                                                                              'task': self.test_entry_1.task.id})
+        self.test_entry_1.refresh_from_db()
+        self.assertEqual(self.test_entry_1.hours, 15)
+
+
 class TestEditTemplateContext:
 
     def setUp(self):
