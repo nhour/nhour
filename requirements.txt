@@ -1,5 +1,5 @@
 django==1.9
-gunicorn==0.4.0
+gunicorn
 dj-database-url
 psycopg2==2.6.1
 whitenoise==3.0
