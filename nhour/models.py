@@ -46,11 +46,10 @@ class Entry(models.Model):
         'System',
         on_delete=models.PROTECT
     )
-    project = ForeignKey(
+    project =ForeignKey(
         'Project',
         on_delete=models.PROTECT,
-        null=True,
-        blank=True
+        null=True
     )
     task = ForeignKey(
         'Task',
