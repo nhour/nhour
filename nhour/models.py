@@ -9,8 +9,6 @@ from django.db.models import CharField, TextField, DateField, DateTimeField, For
     ManyToManyField
 from django.db.models.fields import IntegerField
 
-WEEK_FORMAT = r'^[0-9]{2}-[0-9]{4}$'
-
 
 class System(models.Model):
     name = CharField(max_length=100)
@@ -42,6 +40,12 @@ class Entry(models.Model):
                                     MinValueValidator(1)])
     year = IntegerField(validators=[MaxValueValidator(9999),
                                     MinValueValidator(1000)])
+    hours = DecimalField(decimal_places=2, max_digits=100, validators=[MaxValueValidator(100),
+                                                                       MinValueValidator(0)])
+    user = ForeignKey(User, on_delete=models.PROTECT)
+    comment = TextField(max_length=5000, blank=True, null=True)
+
+class RegularEntry(Entry):
     system = ForeignKey(
         'System',
         on_delete=models.PROTECT
@@ -56,7 +60,27 @@ class Entry(models.Model):
         'Task',
         on_delete=models.PROTECT
     )
-    hours = DecimalField(decimal_places=1, max_digits=100, validators=[MaxValueValidator(100),
-                                                                       MinValueValidator(0)])
-    user = IntegerField()
-    comment = TextField(max_length=5000, blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = "Regular Entries"
+
+    def __eq__(self, other):
+        return isinstance(other, Entry) and other.id == self.id
+
+
+class Activity(models.Model):
+    name = CharField(max_length=100)
+    description = TextField(max_length=600, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class SpecialEntry(Entry):
+    activity = ForeignKey(
+        'Activity',
+        on_delete=models.PROTECT
+    )
+
+    class Meta:
+        verbose_name_plural = "Special Entries"

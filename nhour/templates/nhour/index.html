@@ -6,10 +6,21 @@ Nhour
 {% block content %}
 <div class="">
     <div id="container">
-        Juho Lamminmäki <a href={% previous_week_url year week user %}><i class="fa fa-arrow-left"></i></a> {% week_name year week %} <a href={% next_week_url year week user %}><i class="fa fa-arrow-right"></i></a>
+        Juho Lamminmäki
+        <div class="edit-week-top-bar">
+            <div class="new-entry-buttons">
+                <a type="button" href="{% url 'edit_week' year week user %}"
+                   class="pure-button {% if regular_entry %} pure-button-primary {% endif %} save">Regular</a>
+                <a type="button" href="{% url 'edit_week' year week user %}?special=True"
+                   class="pure-button {% if not regular_entry%} pure-button-primary {% endif %} save">Special</a>
+            </div>
+            <div class="week-selector">
+                <a href={% previous_week_url year week user %}><i class="fa fa-arrow-left"></i></a> {% week_name year week%} <a href={% next_week_url year week user %}><i class="fa fa-arrow-right"></i></a>
+            </div>
+        </div>
+        {% include 'entry_edit.html'%}
 
         {% include 'entry_list.html' %}
-        {% include 'entry_edit.html'%}
     </div>
 </div>
 {% endblock %}

@@ -4,3 +4,4 @@ dj-database-url
 psycopg2==2.6.1
 whitenoise==3.0
 model-mommy==1.2.6
+factory_boy==2.7.0

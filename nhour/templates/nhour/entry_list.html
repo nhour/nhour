@@ -1,3 +1,4 @@
+{% if entries %}
 <table class="blueback pure-table entry-list">
     <tr>
         <th style="width: 10%;"><i class="fa fa-clock-o"></i></th>
@@ -6,26 +7,43 @@
         <th>Task</th>
     </tr>
     {% for entry in entries %}
-        <tr class="blueback blueback-lighter entry-list-row" data-value="{{ entry.id }}">
-            <td style="text-align: center;">{{ entry.hours }}</td>
-            <td>{{ entry.system }}</td>
-            <td>{{ entry.project }}</td>
-            <td>{{ entry.task }}</td>
-        </tr>
-    {% endfor %}
-    {% if total_hours %}
-    <tfoot>
-    <tr>
-        <td style="padding: 0;">Total: {{ total_hours }}</td>
+    <tr class="blueback blueback-lighter entry-list-row"
+        data-url="{% url 'edit_week' year week user %}?entry={{ entry.id }}">
+        <td style="text-align: center;">{{ entry.hours }}</td>
+        <td>{{ entry.system }}</td>
+        <td>{{ entry.project }}</td>
+        <td>{{ entry.task }}</td>
     </tr>
-    </tfoot>
-    {% endif %}
+    {% endfor %}
 </table>
+{% endif %}
+
+{% if special_entries %}
+<table class="blueback pure-table entry-list">
+    <tr>
+        <th style="width: 10%;"><i class="fa fa-clock-o"></i></th>
+        <th>Activity</th>
+    </tr>
+    {% for entry in special_entries %}
+    <tr class="blueback blueback-lighter entry-list-row"
+        data-url="{% url 'edit_week' year week user %}?entry={{ entry.id }}">
+        <td style="text-align: center;">{{ entry.hours }}</td>
+        <td>{{ entry.activity }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% if total_hours %}
+<td style="padding: 0;">Total: {{ total_hours }}</td>
+{% endif %}
 <script>
     $(".entry-list-row").click(
         function(click) {
-            selected_entry = $(click.delegateTarget).data("value")
-            window.location.assign("{% url 'edit_week' %}" + selected_entry);
+            edit_url = $(click.delegateTarget).data("url")
+            window.location.assign(edit_url);
         }
     )
+
+
 </script>

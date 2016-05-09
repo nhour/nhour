@@ -74,7 +74,6 @@
     border-collapse:separate;
     border-spacing:0 8px; width: 100%;
     table-layout: fixed;
-    margin-bottom: 8px;
 }
 
 .entry-list th {
@@ -122,5 +121,4 @@
 
 .week-selector {
     display: inline-block;
-    float: right;
 }

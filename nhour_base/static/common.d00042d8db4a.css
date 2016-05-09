@@ -74,7 +74,6 @@
     border-collapse:separate;
     border-spacing:0 8px; width: 100%;
     table-layout: fixed;
-    margin-bottom: 8px;
 }
 
 .entry-list th {
@@ -111,16 +110,5 @@
 }
 
 .new-entry-buttons {
-    margin-top: 8px; 
-    margin-bottom: 8px;
-    display: inline-block;
+    margin: 8px 8px;
 } 
-
-.pure-button-primary {
-    background-color: rgb(33, 150, 243);
-}
-
-.week-selector {
-    display: inline-block;
-    float: right;
-}

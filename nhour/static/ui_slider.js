@@ -1,6 +1,7 @@
 function createSlider(start) {
     var slider = document.getElementById('slider');
     var selectedHours = document.getElementById('hours-selected');
+    var hours = document.getElementById('id_hours')
 
     noUiSlider.create(slider, {
         start: start,
