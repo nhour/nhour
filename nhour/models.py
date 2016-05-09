@@ -40,7 +40,7 @@ class Entry(models.Model):
                                     MinValueValidator(1)])
     year = IntegerField(validators=[MaxValueValidator(9999),
                                     MinValueValidator(1000)])
-    hours = DecimalField(decimal_places=2, max_digits=100, validators=[MaxValueValidator(100),
+    hours = DecimalField(decimal_places=2, max_digits=3, validators=[MaxValueValidator(100),
                                                                        MinValueValidator(0)])
     user = ForeignKey(User, on_delete=models.PROTECT)
     comment = TextField(max_length=5000, blank=True, null=True)
