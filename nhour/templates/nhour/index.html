@@ -6,7 +6,9 @@ Nhour
 {% block content %}
 <div class="">
     <div id="container">
-        Juho Lamminmäki
+        <div >{{ request.user.first_name }} {{ request.user.last_name }}</div>
+        <div></div>
+        <div>{% if total_hours %} Total: {{ total_hours }} {% endif %}</div>
         <div class="edit-week-top-bar">
             <div class="new-entry-buttons">
                 <a type="button" href="{% url 'edit_week' year week user %}"
@@ -19,7 +21,6 @@ Nhour
             </div>
         </div>
         {% include 'entry_edit.html'%}
-
         {% include 'entry_list.html' %}
     </div>
 </div>

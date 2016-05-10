@@ -41,7 +41,7 @@
       </a>
 
       {% else %}
-      <button type="submit" class="pure-button save" formaction="{% url 'create_entry' %}{% if request.get.special %}?special={{ request.GET.special }} {% endif %}"><i class="fa fa-plus"></i>
+      <button type="submit" class="pure-button save" formaction="{% url 'create_entry' %}{% if request.GET.special %}?special={{ request.GET.special }} {% endif %}"><i class="fa fa-plus"></i>
           Add
       </button>
       {% endif %}

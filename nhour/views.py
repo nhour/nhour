@@ -2,6 +2,7 @@ import datetime
 from decimal import Decimal
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
@@ -26,10 +27,13 @@ def register(request):
             new_user = register_form.save(commit=False)
             new_user.is_active = False
             new_user.save()
+            return redirect("thanks")
     else:
-        register_form = RegisterForm(instance=User())
+        register_form = RegisterForm()
     return render(request, "registration/register.html", context={'register_form': register_form})
 
+def thank_you(request):
+    return render(request, "registration/thanks.html")
 
 @login_required()
 def edit_week(request, year, week, user):
@@ -70,7 +74,18 @@ def _render_page_with_form(form: Form, request, user, week, year):
                                                         'form': form,
                                                         'regular_entry': isinstance(form, RegularEntryForm),
                                                         'year': year,
-                                                        'total_hours': regular_entries.aggregate(Sum('hours'))['hours__sum']})
+                                                        'total_hours': _sum_entry_hours(regular_entries,
+                                                                                        special_entries)})
+
+
+def _sum_entry_hours(regular_entries, special_entries):
+
+    sum_special = special_entries.aggregate(Sum('hours'))['hours__sum']
+    sum_regular = regular_entries.aggregate(Sum('hours'))['hours__sum']
+
+    sum_special = sum_special if sum_special else 0
+    sum_regular = sum_regular if sum_regular else 0
+    return sum_special + sum_regular
 
 
 @login_required

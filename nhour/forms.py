@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import password_validation
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
@@ -57,8 +58,21 @@ class RegisterForm(ModelForm):
         model = User
         fields = ['username', 'password', 'email', 'first_name', 'last_name']
 
-    def clean(self):
-        p1 = self.cleaned_data.get("password")
-        p2 = self.cleaned_data.get("password_again")
-        if p1 != p2:
-            raise ValidationError("Passwords do not match!")
+    def save(self, commit=True):
+        user = super(ModelForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password"])
+        if commit:
+            user.save()
+        return user
+
+    def clean_password_again(self):
+        password1 = self.cleaned_data.get("password")
+        password2 = self.cleaned_data.get("password_again")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError(
+                "The passwords didn't match!",
+                code='password_mismatch',
+            )
+        self.instance.username = self.cleaned_data.get('username')
+        password_validation.validate_password(self.cleaned_data.get('password2'), self.instance)
+        return password2

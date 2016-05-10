@@ -7,7 +7,7 @@ from django.test import TestCase, Client
 import nhour
 from nhour.forms import RegularEntryForm
 from nhour.models import Entry, RegularEntry, System, Project, Task
-from nhour.tests.factories import RegularEntryFactory
+from nhour.tests.factories import RegularEntryFactory, SpecialEntryFactory
 
 
 class TestEntryEditPage(TestCase):
@@ -78,10 +78,8 @@ class TestEntryEditPage(TestCase):
         response = self.c.get(self._edit_page_of_entry(t))
         self.assertEqual(response.context['form'].instance.id, t.id)
 
-
     def _edit_page_of_entry(self, t):
         return '/edit/{}/{}/{}/?entry={}'.format(t.year, t.week, t.user.id, t.id)
-
 
     def test_editing_entry_changes_hours(self):
         test_entry = RegularEntryFactory()
@@ -90,20 +88,3 @@ class TestEntryEditPage(TestCase):
         self.c.post(reverse("save_entry", args=[test_entry.id]), data=post_data)
         test_entry.refresh_from_db()
         self.assertEqual(test_entry.hours, 15)
-
-
-class TestEditTemplateContext:
-    def setUp(self):
-        self.response = self.c.get('/edit/2015/9/1/')
-
-    def test_total_hours_are_calculated(self):
-        self.assertEquals(self.response.context['total_hours'], 5)
-
-    def test_week_is_passed_into_edit_template(self):
-        self.assertEquals(self.response.context['week'], 9)
-
-    def test_year_is_passed_into_edit_template(self):
-        self.assertEquals(self.response.context['year'], 2015)
-
-    def test_user_is_passed_into_edit_template(self):
-        self.assertEquals(self.response.context['user'], '1')

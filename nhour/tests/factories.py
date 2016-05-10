@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from factory import DjangoModelFactory
 from factory.fuzzy import FuzzyText, FuzzyInteger, FuzzyFloat, FuzzyDecimal
 
-from nhour.models import RegularEntry, System, Project, Task
+from nhour.models import RegularEntry, System, Project, Task, Activity, SpecialEntry
 
 
 class UserFactory(DjangoModelFactory):
@@ -72,4 +72,19 @@ class RegularEntryFactory(EntryFactory):
     system = factory.LazyFunction(SystemFactory)
     project = factory.LazyFunction(ProjectFactory)
     task = factory.LazyFunction(TaskFactory)
+
+
+class ActivityFactory(DjangoModelFactory):
+    class Meta:
+        model = Activity
+
+    name = FuzzyText(length=random.Random().randint(1, 100))
+    description = FuzzyText(length=random.Random().randint(1, 600))
+
+
+class SpecialEntryFactory(EntryFactory):
+    class Meta:
+        model = SpecialEntry
+
+    activity = factory.LazyFunction(ActivityFactory)
 

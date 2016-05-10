@@ -1,8 +1,11 @@
 import datetime
 from django.test import TestCase
 
+from nhour.models import RegularEntry, SpecialEntry
 from nhour.templatetags.tags import previous_week_url, next_week_url, week_name
+from nhour.tests.factories import RegularEntryFactory, UserFactory, SpecialEntryFactory
 from nhour.utils import increment_week, decrement_week, date_range_of_week
+from nhour.views import _sum_entry_hours
 
 
 class TestWeekPaging(TestCase):
@@ -39,3 +42,16 @@ class TestWeekNameGeneration(TestCase):
 
     def test_date_range_is_in_the_name(self):
         self.assertIn("2016-03-07 – 2016-03-13", week_name("2016", "10"))
+
+class TestSumEntryHours(TestCase):
+
+    def test_empty_entry_values_are_ok(self):
+        RegularEntryFactory(hours=3)
+        self.assertEqual(3, _sum_entry_hours(RegularEntry.objects.all(), SpecialEntry.objects.all()))
+
+    def test_entry_hours_are_summed_together(self):
+        RegularEntryFactory(hours=3)
+        RegularEntryFactory(hours=6)
+        SpecialEntryFactory(hours=6)
+
+        self.assertEqual(15, _sum_entry_hours(RegularEntry.objects.all(), SpecialEntry.objects.all()))

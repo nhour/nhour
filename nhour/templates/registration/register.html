@@ -4,8 +4,8 @@
     {% for error in register_form.non_field_errors %}
         <span class="required">{{ error }}</span>
     {% endfor %}
+    <h2>Register</h2>
     <form class="pure-form pure-form-stacked register-form" method="post"> {% csrf_token %}
-        <legend>Register</legend>
         <div class="pure-g">
             <div class="pure-u-1-2">
                 <div class="pure-control-group">
