@@ -74,5 +74,5 @@ class RegisterForm(ModelForm):
                 code='password_mismatch',
             )
         self.instance.username = self.cleaned_data.get('username')
-        password_validation.validate_password(self.cleaned_data.get('password2'), self.instance)
+        password_validation.validate_password(self.cleaned_data.get('password_again'), self.instance)
         return password2
