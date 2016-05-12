@@ -20,16 +20,16 @@ class EntryForm(ModelForm):
 
 
 class RegularEntryForm(EntryForm):
-    system = forms.ModelChoiceField(System.objects.all(), empty_label="Select a system")
-    project = forms.ModelChoiceField(Project.objects.all(), empty_label="Select a project", required=False)
-    task = forms.ModelChoiceField(Task.objects.all(), empty_label="Select a task")
+    system = forms.ModelChoiceField(System.objects.all().order_by('name'), empty_label="Select a system")
+    project = forms.ModelChoiceField(Project.objects.all().order_by('name'), empty_label="Select a project", required=False)
+    task = forms.ModelChoiceField(Task.objects.all().order_by('name'), empty_label="Select a task")
     class Meta(EntryForm.Meta):
         model = RegularEntry
         fields = ['system', 'project', 'task'] + EntryForm.Meta.fields
 
 
 class SpecialEntryForm(EntryForm):
-    activity = forms.ModelChoiceField(Activity.objects.all(), empty_label="Select an activity")
+    activity = forms.ModelChoiceField(Activity.objects.all().order_by('name'), empty_label="Select an activity")
     class Meta(EntryForm.Meta):
         model = SpecialEntry
         fields = ["activity"] + EntryForm.Meta.fields
