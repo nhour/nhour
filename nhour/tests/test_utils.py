@@ -2,7 +2,7 @@ import datetime
 from django.test import TestCase
 
 from nhour.models import RegularEntry, SpecialEntry
-from nhour.templatetags.tags import previous_week_url, next_week_url, week_name
+from nhour.templatetags.tags import previous_week_url, next_week_url, week_start_date, _week_difference
 from nhour.tests.factories import RegularEntryFactory, UserFactory, SpecialEntryFactory
 from nhour.utils import increment_week, decrement_week, date_range_of_week
 from nhour.views import _sum_entry_hours
@@ -34,6 +34,10 @@ class TestWeekPaging(TestCase):
         self.assertEqual(next_week_url(2015, 33, 1), '/edit/2015/34/1/')
         self.assertEqual(next_week_url("2015", "33", "1"), '/edit/2015/34/1/')
 
+
+
+
+
 class TestWeekNameGeneration(TestCase):
 
     def test_date_range_of_week_start_and_end_dates_are_correct(self):
@@ -41,7 +45,23 @@ class TestWeekNameGeneration(TestCase):
         self.assertTrue(date_range_of_week(2016, 10), (datetime.date(2016, 3, 7), datetime.date(2016, 3, 13)))
 
     def test_date_range_is_in_the_name(self):
-        self.assertIn("2016-03-07 – 2016-03-13", week_name("2016", "10"))
+        self.assertIn("2016-03-07", week_start_date("2016", "10"))
+
+
+    def test_week_difference(self):
+
+        difference1 = _week_difference("2013", "5", "2013", "6")
+        difference2 = _week_difference("2013", "5", "2013", "2")
+        difference3 = _week_difference("2013", "5", "2012", "5")
+        difference4 = _week_difference("2013", "5", "2013", "5")
+        difference5 = _week_difference("2013", "5", "2012", "7")
+
+        self.assertEqual(1, difference1)
+        self.assertEqual(-3, difference2)
+        self.assertEqual(-52, difference3)
+        self.assertEqual(0, difference4)
+        self.assertEqual(-50, difference5)
+
 
 class TestSumEntryHours(TestCase):
 

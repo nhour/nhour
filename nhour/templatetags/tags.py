@@ -1,4 +1,5 @@
 # coding=utf-8
+import datetime
 from django import template
 from django.core.urlresolvers import reverse
 from django.db.models import Sum
@@ -29,7 +30,35 @@ def next_week_url(year, week, user):
     next_week_year, next_week = increment_week(year, week)
     return reverse('edit_week', args=[next_week_year, next_week, user])
 
+
 @register.simple_tag
-def week_name(year, week):
+def week_start_date(year, week):
     first_date, last_date = date_range_of_week(year, week)
-    return "{} – {}".format(first_date.isoformat(), last_date.isoformat())
+    return first_date.isoformat()
+
+
+@register.simple_tag
+def week_end_date(year, week):
+    first_date, last_date = date_range_of_week(year, week)
+    return last_date.isoformat()
+
+
+def _week_difference(year_now, week_now, year, week):
+    return (int(year) - int(year_now)) * 52 + int(week) - int(week_now)
+
+@register.simple_tag
+def week_difference_today(year, week):
+    today = datetime.datetime.today()
+    week_now = today.isocalendar()[1]
+    year_now = today.year
+
+    return _week_difference(year_now, week_now, year, week)
+
+@register.filter
+def add_plus_if_not_negative(number):
+    number = int(number)
+    if number > 0:
+        return "+{} weeks".format(str(number))
+    elif number == 0:
+        return "This week"
+    return "{} weeks".format(str(number))

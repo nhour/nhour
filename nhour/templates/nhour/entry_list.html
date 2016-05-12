@@ -9,7 +9,7 @@
     </tr>
     {% for entry in entries %}
     <tr class="blueback blueback-lighter entry-list-row"
-        data-url="{% url 'edit_week' year week user %}?entry={{ entry.id }}">
+        data-url="{% url 'edit_week' year week user.id %}?entry={{ entry.id }}">
         <td style="text-align: center;">{{ entry.hours }}</td>
         <td>{{ entry.system }}</td>
         <td>{{ entry.project }}</td>
@@ -28,7 +28,7 @@
     </tr>
     {% for entry in special_entries %}
     <tr class="blueback blueback-lighter entry-list-row"
-        data-url="{% url 'edit_week' year week user %}?entry={{ entry.id }}">
+        data-url="{% url 'edit_week' year week user.id %}?entry={{ entry.id }}">
         <td style="text-align: center;">{{ entry.hours }}</td>
         <td>{{ entry.activity }}</td>
     </tr>

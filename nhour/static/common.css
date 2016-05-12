@@ -47,7 +47,6 @@ body {
 
 #container {
     margin: 10px auto;
-    padding: 20px 150px;
     max-width: 550px;
 }
 #entry-edit-form select, textarea {
@@ -128,5 +127,12 @@ body {
 
 .week-selector {
     display: inline-block;
-    float: right;
+}
+
+.doc-box {
+    word-break:break-all;
+}
+
+.doc-box:empty {
+    display: none;
 }

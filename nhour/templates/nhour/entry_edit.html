@@ -18,6 +18,7 @@
                     </label>
                     {% endif %}
                     {{ field }}
+                    <div class="doc-box blueback blueback-lighter"></div>
                 </div>
                 {% endfor %}
             </div>
@@ -36,7 +37,7 @@
       <button type="submit" formaction="{% url 'delete_entry' form.instance.id %}" class="pure-button save"><i class="fa fa-trash"></i>
           Delete
       </button>
-      <a type="button" href="{% url 'edit_week' year week user %}" class="pure-button save"><i class="fa fa-ban"></i>
+      <a type="button" href="{% url 'edit_week' year week user.id %}" class="pure-button save"><i class="fa fa-ban"></i>
           Cancel
       </a>
 
@@ -48,6 +49,7 @@
     </div>
 </form>
 <script src="{% static 'ui_slider.js'%}"></script>
+<script src="{% static 'docbox.js'%}"></script>
 <script>
 
 {% if form.instance.id %}
@@ -56,4 +58,23 @@
     defaultHours = 10;
 {% endif %}
 $(document).ready(createSlider(defaultHours));
+
+
+{% if not request.GET.special %}
+
+    tasks = {{ tasks | safe}}
+    projects = {{ projects | safe}}
+    systems = {{ systems | safe}}
+
+    new DocBox(tasks, $("#id_task"), $("#id_task").siblings(".doc-box"));
+    new DocBox(projects, $("#id_project"), $("#id_project").siblings(".doc-box"));
+    new DocBox(systems, $("#id_system"), $("#id_system").siblings(".doc-box"));
+
+{% else %}
+
+    activities = {{ activities | safe }}
+    new DocBox(activities, $("#id_activity"), $("#id_activity").siblings(".doc-box"));
+
+{% endif %}
+
 </script>

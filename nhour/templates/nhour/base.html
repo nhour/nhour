@@ -18,16 +18,21 @@
 <div class="pure-menu pure-menu-horizontal" style="background-color: #2196F3; box-shadow: 3px 3px 3px #888888;">
     <ul class="pure-menu-list" style="width: 100%">
         <div class="menu-left">
-            <li class="pure-menu-item"><a href="/" style="color: #FFFFFF; " class="pure-menu-heading pure-menu-link">nHour</a></li>
-            <li class="pure-menu-item"><a style="color: #FFFFFF; " href="#" class="pure-menu-link">Statistics</a></li>
+            <li class="pure-menu-item"><a href="/" style="color: #FFFFFF; " class="pure-menu-heading pure-menu-link"><i class="fa fa-clock-o" aria-hidden="true"></i>
+Tuutikki</a></li>
+            <li class="pure-menu-item"><a style="color: #FFFFFF; " href="#" class="pure-menu-link"><i class="fa fa-bar-chart" aria-hidden="true"></i>
+ Statistics</a></li>
             <li class="pure-menu-item"><a style="color: #FFFFFF;" href="/admin"
-                                          class="pure-menu-link">Administration</a>
+                                          class="pure-menu-link"><i class="fa fa-cog" aria-hidden="true"></i>
+
+Administration</a>
             </li>
         </div>
         <div class="menu-right">
             {% if not user.is_anonymous %}
-            <li class="pure-menu-item"><a style="color: #FFFFFF;" href="{% url 'logout' %}" class="pure-menu-link">Log
-                Out</a>
+            <li class="pure-menu-item"><a style="color: #FFFFFF;" href="{% url 'logout' %}" class="pure-menu-link"> Log
+                Out <i class="fa fa-sign-out" aria-hidden="true"></i>
+</a>
             </li>
         </div>
         {% endif %}

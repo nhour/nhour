@@ -4,6 +4,7 @@ from decimal import Decimal
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db.models import Sum
@@ -11,7 +12,7 @@ from django.forms import Form
 from django.shortcuts import render, redirect, get_object_or_404
 
 from nhour.forms import RegularEntryForm, RegisterForm, entry_form_factory, SpecialEntryForm
-from nhour.models import SpecialEntry, RegularEntry, Entry
+from nhour.models import SpecialEntry, RegularEntry, Entry, System, Task, Project, Activity
 
 
 @login_required()
@@ -67,15 +68,25 @@ def _render_page_with_form(form: Form, request, user, week, year):
     regular_entries = RegularEntry.objects.filter(week=week, user=user)
     special_entries = SpecialEntry.objects.filter(week=week, user=user)
 
+    systems = serializers.serialize("json", System.objects.all())
+    projects = serializers.serialize("json", Project.objects.all())
+    tasks = serializers.serialize("json", Task.objects.all())
+    activities = serializers.serialize("json", Activity.objects.all())
+
+
     return render(request, "nhour/index.html", context={'entries': regular_entries,
                                                         'special_entries': special_entries,
                                                         'week': week,
-                                                        'user': user,
+                                                        'user': User.objects.get(id=user),
                                                         'form': form,
                                                         'regular_entry': isinstance(form, RegularEntryForm),
                                                         'year': year,
                                                         'total_hours': _sum_entry_hours(regular_entries,
-                                                                                        special_entries)})
+                                                                                        special_entries),
+                                                        'systems': systems,
+                                                        'projects': projects,
+                                                        'tasks': tasks,
+                                                        'activities': activities})
 
 
 def _sum_entry_hours(regular_entries, special_entries):

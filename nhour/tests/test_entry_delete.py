@@ -1,8 +1,6 @@
-from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
-from model_mommy import mommy
 
 from nhour.models import Entry
 from nhour.tests.factories import RegularEntryFactory
