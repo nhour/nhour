@@ -1,4 +1,20 @@
 {% load staticfiles %}
+<div class="quick-select pure-form" style="width: 100%">
+    <label for="quick-selector">Shortcuts</label>
+    <select id="quick-selector" style="width: 100%">
+        {% for s in shortcuts %}
+            <option data-system="{{ s.system.id }}" data-project="{{ s.project.id }}" data-task="{{ s.task.id }}">{{ s.system.name }} / {{ s.project.name }} / {{ s.task.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="edit-week-top-bar">
+            <div id="new-entry-buttons">
+                <a type="button" href="{% url 'edit_week' year week user.id %}"
+                   class="pure-button {% if regular_entry %} pure-button-primary-nhour {% endif %} save">Regular</a>
+                <a type="button" href="{% url 'edit_week' year week user.id %}?special=True"
+                   class="pure-button {% if not regular_entry%} pure-button-primary-nhour {% endif %} save">Special</a>
+            </div>
+        </div>
 <form class="pure-form pure-form-stacked" method="post" style="margin-top: 8px;">
     {% csrf_token %}
     <div class="blueback">
@@ -76,5 +92,12 @@ $(document).ready(createSlider(defaultHours));
     new DocBox(activities, $("#id_activity"), $("#id_activity").siblings(".doc-box"));
 
 {% endif %}
+
+$("#quick-selector").change(function(event) {
+    selected = $("#quick-selector").children("option:selected")
+    $("#id_system").val(selected.data("system"))
+    $("#id_project").val(selected.data("project"))
+    $("#id_task").val(selected.data("task"))
+})
 
 </script>

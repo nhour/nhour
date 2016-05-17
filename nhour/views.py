@@ -13,6 +13,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from nhour.forms import RegularEntryForm, RegisterForm, entry_form_factory, SpecialEntryForm
 from nhour.models import SpecialEntry, RegularEntry, Entry, System, Task, Project, Activity
+from nhour.utils import entry_shortcuts
 
 
 @login_required()
@@ -73,11 +74,11 @@ def _render_page_with_form(form: Form, request, user, week, year):
     tasks = serializers.serialize("json", Task.objects.all())
     activities = serializers.serialize("json", Activity.objects.all())
 
-
+    user_object = User.objects.get(id=user)
     return render(request, "nhour/index.html", context={'entries': regular_entries,
                                                         'special_entries': special_entries,
                                                         'week': week,
-                                                        'user': User.objects.get(id=user),
+                                                        'user': user_object,
                                                         'form': form,
                                                         'regular_entry': isinstance(form, RegularEntryForm),
                                                         'year': year,
@@ -86,7 +87,8 @@ def _render_page_with_form(form: Form, request, user, week, year):
                                                         'systems': systems,
                                                         'projects': projects,
                                                         'tasks': tasks,
-                                                        'activities': activities})
+                                                        'activities': activities,
+                                                        'shortcuts': entry_shortcuts(user_object, int(year), int(week))})
 
 
 def _sum_entry_hours(regular_entries, special_entries):

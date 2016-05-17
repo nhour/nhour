@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Sum
 
 from nhour.forms import RegularEntryForm
-from nhour.models import System, Project, Task, Entry
+from nhour.models import System, Project, Task, Entry, RegularEntry
 from nhour.utils import decrement_week, increment_week, date_range_of_week
 
 register = template.Library()

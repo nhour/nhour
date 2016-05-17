@@ -1,6 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
+import django.middleware.csrf
 
 from nhour.models import Entry
 from nhour.tests.factories import RegularEntryFactory

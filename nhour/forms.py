@@ -3,7 +3,7 @@ from django.contrib.auth import password_validation
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm
+from django.forms import ModelForm, Form
 
 from nhour.models import RegularEntry, System, Project, Task, SpecialEntry, Activity, Entry
 
@@ -47,6 +47,7 @@ def entry_form_factory(instance: Entry, *args, **kwargs) -> EntryForm:
         return SpecialEntryForm(instance=instance, *args, **kwargs)
     else:
         return RegularEntryForm(instance=instance, *args, **kwargs)
+
 
 class RegisterForm(ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(), validators=[validate_password])

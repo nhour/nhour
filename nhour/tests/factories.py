@@ -8,11 +8,17 @@ from factory.fuzzy import FuzzyText, FuzzyInteger, FuzzyFloat, FuzzyDecimal
 from nhour.models import RegularEntry, System, Project, Task, Activity, SpecialEntry
 
 
+def _unique_username():
+    for i in range(100):
+        username_attempt = FuzzyText(length=random.Random().randint(1, 30))
+        if User.objects.filter(username=username_attempt).count() == 0:
+            return username_attempt
+
 class UserFactory(DjangoModelFactory):
     class Meta:
         model = User
 
-    username = FuzzyText(length=random.Random().randint(1, 30))
+    username = factory.LazyFunction(_unique_username)
     password = FuzzyText(length=random.Random().randint(1, 30))
     first_name = FuzzyText(length=random.Random().randint(1, 30))
     last_name = FuzzyText(length=random.Random().randint(1, 30))

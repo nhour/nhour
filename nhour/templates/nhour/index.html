@@ -8,7 +8,6 @@ Nhour
     <div id="container">
         <div class="week-selector">
             {% week_start_date year week%} — {% week_end_date year week%}
-
         </div>
         <div class="week-difference">
             {% filter add_plus_if_not_negative %} {% week_difference_today year week%} {% endfilter %}
@@ -17,14 +16,7 @@ Nhour
         </div>
         <h2 style="margin-bottom: 2px;">{{ user.first_name }} {{ user.last_name }}</h2>
         <div>{% if total_hours %} Total: {{ total_hours }} {% endif %}</div>
-        <div class="edit-week-top-bar">
-            <div class="new-entry-buttons">
-                <a type="button" href="{% url 'edit_week' year week user.id %}"
-                   class="pure-button {% if regular_entry %} pure-button-primary {% endif %} save">Regular</a>
-                <a type="button" href="{% url 'edit_week' year week user.id %}?special=True"
-                   class="pure-button {% if not regular_entry%} pure-button-primary {% endif %} save">Special</a>
-            </div>
-        </div>
+        <br>
         {% include 'entry_edit.html'%}
         {% include 'entry_list.html' %}
     </div>

@@ -9,7 +9,7 @@ function createSlider(start) {
         connect: 'lower',
         range: {
             'min':  0.5,
-            'max':  50
+            'max':  40
         },
         step: 0.5,
     });

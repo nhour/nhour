@@ -4,7 +4,7 @@ from django.test import TestCase
 from nhour.models import RegularEntry, SpecialEntry
 from nhour.templatetags.tags import previous_week_url, next_week_url, week_start_date, _week_difference
 from nhour.tests.factories import RegularEntryFactory, UserFactory, SpecialEntryFactory
-from nhour.utils import increment_week, decrement_week, date_range_of_week
+from nhour.utils import increment_week, decrement_week, date_range_of_week, entry_shortcuts
 from nhour.views import _sum_entry_hours
 
 
@@ -75,3 +75,24 @@ class TestSumEntryHours(TestCase):
         SpecialEntryFactory(hours=6)
 
         self.assertEqual(15, _sum_entry_hours(RegularEntry.objects.all(), SpecialEntry.objects.all()))
+
+
+class TestShortcuts(TestCase):
+
+    def test_no_shortcuts_if_no_previous_entries(self):
+        self.assertEqual(0, len(entry_shortcuts(UserFactory(), 2015, 22)))
+
+    def test_shortcuts_are_generated_from_previous_and_future_weeks(self):
+        user = UserFactory()
+        RegularEntryFactory.create_batch(3, user=user, year="2015", week="20")
+        RegularEntryFactory.create_batch(5, user=user, year="2015", week="21")
+        RegularEntryFactory.create_batch(1, user=user, year="2015", week="22")
+        RegularEntryFactory.create_batch(1, user=user, year="2015", week="23")
+        self.assertEqual(9, len(entry_shortcuts(user, 2015, 22)))
+
+    def test_only_shortcuts_from_the_specified_user_are_returned(self):
+        right_user = UserFactory.create()
+        wrong_user = UserFactory.create()
+        RegularEntryFactory.create_batch(3, user=right_user, year="2015", week="20")
+        RegularEntryFactory.create_batch(5, user=wrong_user, year="2015", week="21")
+        self.assertEqual(3, len(entry_shortcuts(right_user, 2015, 22)))

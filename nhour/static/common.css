@@ -16,7 +16,6 @@
 }
 
 .save {
-    margin-top:8px;
     box-shadow: 2px 2px 3px #888888;
 }
 
@@ -115,13 +114,14 @@ body {
     float: right;
 }
 
-.new-entry-buttons {
+#new-entry-buttons {
     margin-top: 8px; 
     margin-bottom: 8px;
     display: inline-block;
 }
 
-.pure-button-primary {
+.pure-button-primary-nhour {
+    color: white;
     background-color: rgb(33, 150, 243);
 }
 
