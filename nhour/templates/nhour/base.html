@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load tags %}
 <html lang="en">
 <head>
     <script src="{% static 'jquery-2.1.4.min.js'%}"></script>
@@ -20,7 +21,7 @@
         <div class="menu-left">
             <li class="pure-menu-item"><a href="/" style="color: #FFFFFF; " class="pure-menu-heading pure-menu-link"><i class="fa fa-clock-o" aria-hidden="true"></i>
 Tuutikki</a></li>
-            <li class="pure-menu-item"><a style="color: #FFFFFF; " href="#" class="pure-menu-link"><i class="fa fa-bar-chart" aria-hidden="true"></i>
+            <li class="pure-menu-item"><a style="color: #FFFFFF; " href="{% caravel_url %}" class="pure-menu-link"><i class="fa fa-bar-chart" aria-hidden="true"></i>
  Statistics</a></li>
             <li class="pure-menu-item"><a style="color: #FFFFFF;" href="/admin"
                                           class="pure-menu-link"><i class="fa fa-cog" aria-hidden="true"></i>
