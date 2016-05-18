@@ -28,4 +28,6 @@ def entry_shortcuts(user, year, week):
     return RegularEntry.objects \
                .filter(user=user) \
                .exclude(year=year, week=week) \
-               .order_by("-year", "-week")[:max_shortcuts]
+               .order_by("-year", "-week") \
+               .values("system", "project", "task") \
+               .distinct()[:max_shortcuts]

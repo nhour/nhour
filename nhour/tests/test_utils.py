@@ -3,7 +3,7 @@ from django.test import TestCase
 
 from nhour.models import RegularEntry, SpecialEntry
 from nhour.templatetags.tags import previous_week_url, next_week_url, week_start_date, _week_difference
-from nhour.tests.factories import RegularEntryFactory, UserFactory, SpecialEntryFactory
+from nhour.tests.factories import RegularEntryFactory, UserFactory, SpecialEntryFactory, SystemFactory
 from nhour.utils import increment_week, decrement_week, date_range_of_week, entry_shortcuts
 from nhour.views import _sum_entry_hours
 
@@ -96,3 +96,15 @@ class TestShortcuts(TestCase):
         RegularEntryFactory.create_batch(3, user=right_user, year="2015", week="20")
         RegularEntryFactory.create_batch(5, user=wrong_user, year="2015", week="21")
         self.assertEqual(3, len(entry_shortcuts(right_user, 2015, 22)))
+
+    def test_no_duplicates_are_returned(self):
+        entry = RegularEntryFactory(user=UserFactory(), year="2015", week="20")
+        self._create_duplicate(entry)
+
+        self.assertEqual(1, len(entry_shortcuts(user=entry.user, year=entry.year, week=int(entry.week) - 1)))
+
+
+    def _create_duplicate(self, entry):
+        entry.pk = None
+        entry.id = None
+        entry.save()
