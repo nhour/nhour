@@ -1,5 +1,7 @@
 # coding=utf-8
 import datetime
+import os
+
 from django import template
 from django.core.urlresolvers import reverse
 from django.db.models import Sum
@@ -62,3 +64,9 @@ def add_plus_if_not_negative(number):
     elif number == 0:
         return "This week"
     return "{} weeks".format(str(number))
+
+
+@register.simple_tag
+def caravel_url():
+    return os.environ.get("CARAVEL_URL", "#")
+
