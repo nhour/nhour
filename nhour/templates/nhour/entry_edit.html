@@ -8,8 +8,8 @@
             </div>
         </div>
 {% if not request.GET.special %}
+    Shortcuts
     <div class="quick-select" style="width: 100%">
-        Shortcuts
         {% for s in shortcuts %}
             <button class="pure-button" data-system="{{ s.system.id }}" data-project="{{ s.project.id }}" data-task="{{ s.task.id }}">
                 {{ s.system.name }} {% if s.project %} - {{ s.project.name }} {% endif %} - {{ s.task.name }}
