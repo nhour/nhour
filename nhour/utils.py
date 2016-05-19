@@ -42,4 +42,9 @@ def entry_shortcuts(user, year, week):
       "project": Project.objects.filter(id=e[1]).first(),
       "task": Task.objects.get(id=e[2])} for e in unique_results]
 
-    return sorted(unordered_shortcuts, key=lambda k: (k["system"].name, k["project"].name, k["task"].name))
+    def sorter(k):
+        if k["project"]:
+            return k["system"].name, k["project"].name, k["task"].name
+        return k["system"].name, k["task"].name
+
+    return sorted(unordered_shortcuts, key=sorter)
