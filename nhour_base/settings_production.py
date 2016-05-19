@@ -9,7 +9,7 @@ DB_USER = os.environ['NHOUR_DB_USER']
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'nhour',
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,

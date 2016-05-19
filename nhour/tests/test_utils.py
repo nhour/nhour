@@ -99,12 +99,7 @@ class TestShortcuts(TestCase):
 
     def test_no_duplicates_are_returned(self):
         entry = RegularEntryFactory(user=UserFactory(), year="2015", week="20")
-        self._create_duplicate(entry)
+        entry2 = RegularEntryFactory(user=entry.user, system=entry.system, project=entry.project, task=entry.task, year="2014")
 
+        self.assertEqual(2, RegularEntry.objects.count())
         self.assertEqual(1, len(entry_shortcuts(user=entry.user, year=entry.year, week=int(entry.week) - 1)))
-
-
-    def _create_duplicate(self, entry):
-        entry.pk = None
-        entry.id = None
-        entry.save()

@@ -18,7 +18,7 @@ class TestEntryEditPage(TestCase):
         self.c.login(username="testuser", password="Testpassword")
 
     def test_opening_edit_page(self):
-        entries = RegularEntryFactory.create_batch(100)
+        entries = RegularEntryFactory.create_batch(10)
         for entry in entries:
             self.assertEquals(self.c.get(self._edit_page_of_entry(entry)).status_code, 200)
 

@@ -1,6 +1,8 @@
 import datetime
 
-from nhour.models import RegularEntry
+from django.utils.datastructures import OrderedSet
+
+from nhour.models import RegularEntry, System, Task, Project
 
 
 def increment_week(year, week):
@@ -24,10 +26,17 @@ def date_range_of_week(year, week):
 
 
 def entry_shortcuts(user, year, week):
+    # Couldn't figure out how to do these using the database.
+    max_results = 150
     max_shortcuts = 15
-    return RegularEntry.objects \
+
+    entires_with_ids = RegularEntry.objects \
                .filter(user=user) \
                .exclude(year=year, week=week) \
-               .order_by("-year", "-week") \
-               .values("system", "project", "task") \
-               .distinct()[:max_shortcuts]
+               .values("system", "project", "task")[:max_results]
+    tuple_results = [(entry["system"], entry["project"], entry["task"]) for entry in entires_with_ids]
+    unique_results = list(OrderedSet(tuple_results))[:15]
+    return \
+    [{"system": System.objects.get(id=e[0]),
+      "project": Project.objects.filter(id=e[1]).first(),
+      "task": Task.objects.get(id=e[2])} for e in unique_results]

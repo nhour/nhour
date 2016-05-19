@@ -75,6 +75,7 @@ def _render_page_with_form(form: Form, request, user, week, year):
     activities = serializers.serialize("json", Activity.objects.all())
 
     user_object = User.objects.get(id=user)
+    shortcuts = entry_shortcuts(user_object, int(year), int(week))
     return render(request, "nhour/index.html", context={'entries': regular_entries,
                                                         'special_entries': special_entries,
                                                         'week': week,
@@ -88,7 +89,7 @@ def _render_page_with_form(form: Form, request, user, week, year):
                                                         'projects': projects,
                                                         'tasks': tasks,
                                                         'activities': activities,
-                                                        'shortcuts': entry_shortcuts(user_object, int(year), int(week))})
+                                                        'shortcuts': shortcuts})
 
 
 def _sum_entry_hours(regular_entries, special_entries):

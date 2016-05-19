@@ -45,6 +45,9 @@ class Entry(models.Model):
     user = ForeignKey(User, on_delete=models.PROTECT)
     comment = TextField(max_length=5000, blank=True, null=True)
 
+    class Meta:
+        ordering = ("-year", "-week")
+
 class RegularEntry(Entry):
     system = ForeignKey(
         'System',

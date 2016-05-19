@@ -136,3 +136,11 @@ body {
 .doc-box:empty {
     display: none;
 }
+
+.quick-select button {
+    margin: 2px;
+    font-size: 75%;
+    max-width: 100%;
+    overflow-x: hidden;
+    display: inline;
+}

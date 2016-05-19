@@ -18,7 +18,7 @@ class UserFactory(DjangoModelFactory):
     class Meta:
         model = User
 
-    username = factory.LazyFunction(_unique_username)
+    username = FuzzyText(length=random.Random().randint(1, 30))
     password = FuzzyText(length=random.Random().randint(1, 30))
     first_name = FuzzyText(length=random.Random().randint(1, 30))
     last_name = FuzzyText(length=random.Random().randint(1, 30))
