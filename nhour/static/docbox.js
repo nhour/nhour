@@ -17,7 +17,7 @@ DocFetcher.prototype.getDocumentation = function(primaryKey) {
 
 function DocBox(models, dropdown, docbox) {
     var docFetcher = new DocFetcher(models)
-    dropdown.click(function(event) {
+    dropdown.on('click propertychange', function(event) {
         selected = dropdown.children("option:selected")
         docbox.text(docFetcher.getDocumentation(selected.val()));
     });
