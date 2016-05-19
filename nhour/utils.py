@@ -1,4 +1,5 @@
 import datetime
+from operator import itemgetter
 
 from django.utils.datastructures import OrderedSet
 
@@ -36,7 +37,9 @@ def entry_shortcuts(user, year, week):
                .values("system", "project", "task")[:max_results]
     tuple_results = [(entry["system"], entry["project"], entry["task"]) for entry in entires_with_ids]
     unique_results = list(OrderedSet(tuple_results))[:15]
-    return \
+    unordered_shortcuts = \
     [{"system": System.objects.get(id=e[0]),
       "project": Project.objects.filter(id=e[1]).first(),
       "task": Task.objects.get(id=e[2])} for e in unique_results]
+
+    return sorted(unordered_shortcuts, key=lambda k: k["system"].name)
