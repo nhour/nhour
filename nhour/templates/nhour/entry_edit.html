@@ -9,7 +9,7 @@
         </div>
 {% if not request.GET.special %}
     Shortcuts
-    <div class="quick-select" style="width: 100%">
+    <div class="quick-select" style="width: 100%;">
         {% for s in shortcuts %}
             <button class="pure-button" data-system="{{ s.system.id }}" data-project="{{ s.project.id }}" data-task="{{ s.task.id }}">
                 {{ s.system.name }} {% if s.project %} - {{ s.project.name }} {% endif %} - {{ s.task.name }}
@@ -40,7 +40,7 @@
                 </div>
                 {% endfor %}
             </div>
-            <label for="slider">Hours: <span id="hours-selected"></span></label>
+            <label for="slider">Hours: <input type="number" min="0.5" max="40" step="0.5" id="hours-selected"></label>
 
             <div id="slider"></div>
 
