@@ -80,9 +80,9 @@ $(document).ready(createSlider(defaultHours));
 
 {% if not request.GET.special %}
 
-    tasks = {{ tasks | safe}}
-    projects = {{ projects | safe}}
-    systems = {{ systems | safe}}
+    var tasks = {{ tasks | safe}}
+    var projects = {{ projects | safe}}
+    var systems = {{ systems | safe}}
 
     new DocBox(tasks, $("#id_task"), $("#id_task").siblings(".doc-box"));
     new DocBox(projects, $("#id_project"), $("#id_project").siblings(".doc-box"));
@@ -96,14 +96,34 @@ $(document).ready(createSlider(defaultHours));
 {% endif %}
 
 $(".quick-select button").click(function(event) {
-    var selected = $(event.target)
-    $("#id_system").val(selected.data("system"))
-    $("#id_project").val(selected.data("project"))
-    $("#id_task").val(selected.data("task"))
+    var selected = $(event.target);
+    $("#id_system").val(selected.data("system"));
+    $("#id_project").val(selected.data("project"));
+    $("#id_task").val(selected.data("task"));
 
     $("#id_system").click();
     $("#id_project").click();
     $("#id_task").click();
-})
+});
+
+$("#id_system").click(function(event) {
+    var selected = $(event.target);
+    var systemId = parseInt(selected.val());
+
+    var relatedProjects = projects.filter(function(p) {
+        return p.fields.related_systems.includes(systemId);
+    });
+
+    var relatedProjectIds = relatedProjects.map(function(p) {return p.pk})
+
+    $("#id_project option").each(function(index, element) {
+       if(relatedProjectIds.includes(parseInt(element.value))) {
+           $(element).show();
+       } else {
+           $(element).hide();
+       }
+    });
+
+});
 
 </script>
