@@ -106,7 +106,7 @@ $(".quick-select button").click(function(event) {
     $("#id_task").click();
 });
 
-$("#id_system").click(function(event) {
+$("#id_system").change(function(event) {
     var selected = $(event.target);
     var systemId = parseInt(selected.val());
 
@@ -117,13 +117,15 @@ $("#id_system").click(function(event) {
     var relatedProjectIds = relatedProjects.map(function(p) {return p.pk})
 
     $("#id_project option").each(function(index, element) {
-       if(relatedProjectIds.includes(parseInt(element.value))) {
-           $(element).show();
-       } else {
-           $(element).hide();
+       if(index > 0) {
+           if(relatedProjectIds.includes(parseInt(element.value))) {
+               $(element).show();
+           } else {
+               $(element).hide();
+           }
        }
     });
-
+    $("#id_project").val("");
 });
 
 </script>
