@@ -45,3 +45,4 @@ fabric.properties
 
 *.pyc
 db.sqlite3
+*nhour_base/static*

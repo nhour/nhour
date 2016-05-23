@@ -46,7 +46,7 @@ body {
 
 #container {
     margin: 10px auto;
-    max-width: 550px;
+    max-width: 800px;
 }
 #entry-edit-form select, textarea {
     width: 100%;
@@ -97,6 +97,7 @@ body {
 }
 .entry-list-row {
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .entry-list-row:hover {
@@ -104,7 +105,9 @@ body {
 }
 
 .entry-list-row td{
-    overflow: hidden;
+    word-wrap: break-word;
+    overflow-y: auto;
+    max-height: 30px;
 }
 
 .menu-left{
@@ -156,4 +159,8 @@ body {
 
    opacity: 1;
 
+}
+
+.entry-list-cell {
+    height:40px; overflow:auto;
 }

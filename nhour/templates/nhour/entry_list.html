@@ -2,18 +2,20 @@
 <h2>Regular</h2>
 <table class="blueback pure-table entry-list">
     <tr>
-        <th style="width: 10%;"><i class="fa fa-clock-o"></i></th>
+        <th style="width: 50px;"><i class="fa fa-clock-o"></i></th>
         <th>System</th>
         <th>Project</th>
         <th>Task</th>
+        <th>Comment</th>
     </tr>
     {% for entry in entries %}
     <tr class="blueback blueback-lighter entry-list-row"
         data-url="{% url 'edit_week' year week user.id %}?entry={{ entry.id }}">
-        <td style="text-align: center;">{{ entry.hours }}</td>
-        <td>{{ entry.system }}</td>
-        <td>{{ entry.project }}</td>
-        <td>{{ entry.task }}</td>
+        <td><div class="entry-list-cell">{{ entry.hours }}</div></td>
+        <td><div class="entry-list-cell">{{ entry.system }}</div></td>
+        <td><div class="entry-list-cell">{{ entry.project }}</div></td>
+        <td><div class="entry-list-cell">{{ entry.task }}</div></td>
+        <td><div class="entry-list-cell">{{ entry.comment }}</div></td>
     </tr>
     {% endfor %}
 </table>
