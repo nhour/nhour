@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import CharField, TextField, DateField, DateTimeField, ForeignKey, DecimalField, EmailField, \
-    ManyToManyField
+    ManyToManyField, BooleanField
 from django.db.models.fields import IntegerField
 
 
@@ -34,6 +34,13 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
+class Week(models.Model):
+    week = IntegerField(validators=[MaxValueValidator(52),
+                                    MinValueValidator(1)])
+    year = IntegerField(validators=[MaxValueValidator(9999),
+                                MinValueValidator(1000)])
+    user = ForeignKey(User, on_delete=models.PROTECT)
+    complete = BooleanField(default=False)
 
 class Entry(models.Model):
     week = IntegerField(validators=[MaxValueValidator(52),

@@ -14,5 +14,6 @@ urlpatterns = [
     url(r'^logout/', logout_then_login, name="logout"),
     url(r'^register/$', views.register, name="register"),
     url(r'^admin/', admin.site.urls),
-    url(r'^thanks/', views.thank_you, name="thanks")
+    url(r'^thanks/', views.thank_you, name="thanks"),
+    url(r'^complete/([0-9]{4})/([0-9]{1,2})/([0-9]*)/$', views.week_complete, name="complete")
 ]

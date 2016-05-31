@@ -9,17 +9,18 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db.models import Sum
 from django.forms import Form
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from nhour.forms import RegularEntryForm, RegisterForm, entry_form_factory, SpecialEntryForm
-from nhour.models import SpecialEntry, RegularEntry, Entry, System, Task, Project, Activity
+from nhour.models import SpecialEntry, RegularEntry, Entry, System, Task, Project, Activity, Week
 from nhour.utils import entry_shortcuts
 
 
 @login_required()
 def index_redirect(request):
     today = datetime.datetime.today()
-    return redirect('edit_week', today.year, today.isocalendar()[1], request.user.id)
+    return edit_week(request, today.year, today.isocalendar()[1], request.user.id)
 
 
 def register(request):
@@ -76,6 +77,10 @@ def _render_page_with_form(form: Form, request, user, week, year):
 
     user_object = User.objects.get(id=user)
     shortcuts = entry_shortcuts(user_object, int(year), int(week))
+    week_complete = Week.objects.get_or_create(user=user_object,
+                                               week=week,
+                                               year=year)[0].complete
+
     return render(request, "nhour/index.html", context={'entries': regular_entries,
                                                         'special_entries': special_entries,
                                                         'week': week,
@@ -89,7 +94,8 @@ def _render_page_with_form(form: Form, request, user, week, year):
                                                         'projects': projects,
                                                         'tasks': tasks,
                                                         'activities': activities,
-                                                        'shortcuts': shortcuts})
+                                                        'shortcuts': shortcuts,
+                                                        'week_complete': week_complete})
 
 
 def _sum_entry_hours(regular_entries, special_entries):
@@ -116,7 +122,7 @@ def _submit_form(request, form):
     else:
         return _render_page_with_form(form, request, form.instance.user.id, form.instance.week, form.instance.year)
 
-
+@login_required
 def create_entry(request):
     is_special = "True" == request.GET.get("special", "False")
     if is_special:
@@ -136,3 +142,14 @@ def delete_entry(request, entry_id):
     deleted_entry = get_object_or_404(Entry, id=entry_id)
     deleted_entry.delete()
     return _redirect_to_entry_list(deleted_entry)
+
+@login_required
+def week_complete(request, year, week, user):
+    complete = request.POST.get("complete", 'off')
+    user_object = User.objects.get(id=user)
+    week, _ = Week.objects.get_or_create(user=user_object,
+                               week=week,
+                               year=year)
+    week.complete = complete == "on"
+    week.save()
+    return HttpResponse('Success')

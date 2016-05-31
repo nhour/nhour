@@ -15,9 +15,32 @@ Nhour
             <a href={% next_week_url year week user.id %}>Next</a>
         </div>
         <h2 style="margin-bottom: 2px;">{{ user.first_name }} {{ user.last_name }}</h2>
-        <div>{% if total_hours %} Total: {{ total_hours }} {% endif %}</div>
+        <div>
+            {% if total_hours %} Total: {{ total_hours }} {% endif %}
+             <form id="complete-form" class="pure-form">
+                 {% csrf_token %}
+                 <label for="complete">This week is complete</label>
+                 <input id="complete" name="complete" type="checkbox" {% if week_complete %} checked {% endif %}>
+                 <span id="post-success" style="color: green; font-size: 80%; display: none;"> Saved successfully!</span>
+            </form>
+        </div>
+
         {% include 'entry_edit.html'%}
         {% include 'entry_list.html' %}
     </div>
 </div>
+<script>
+    $("#complete").change(function(event) {
+        console.log($("#complete-form").serialize())
+        $.post(
+         "{% url 'complete' year week user.id %}",
+         $("#complete-form").serialize(),
+         function() {
+            $("#post-success").hide()
+            $("#post-success").delay(50).show()
+            $("#post-success").delay(500).fadeOut('fast')
+         })
+         .error(function() {alert("Could not change completion status, please try again later!")});
+    });
+</script>
 {% endblock %}
