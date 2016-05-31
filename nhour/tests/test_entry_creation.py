@@ -6,8 +6,8 @@ from django.test import TestCase, Client
 
 import nhour
 from nhour.forms import RegularEntryForm
-from nhour.models import Entry, RegularEntry, System, Project, Task
-from nhour.tests.factories import RegularEntryFactory, SpecialEntryFactory
+from nhour.models import Entry, RegularEntry, System, Project, Task, Week
+from nhour.tests.factories import RegularEntryFactory, SpecialEntryFactory, UserFactory
 
 
 class TestEntryEditPage(TestCase):
@@ -88,3 +88,17 @@ class TestEntryEditPage(TestCase):
         self.c.post(reverse("save_entry", args=[test_entry.id]), data=post_data)
         test_entry.refresh_from_db()
         self.assertEqual(test_entry.hours, 15)
+
+    def test_week_complete_toggle_on(self):
+        user = UserFactory()
+
+        self.c.post(reverse("complete", args=[2001, 32, user.id]), data={"complete": "on"})
+        week = Week.objects.get(user=user, week=32)
+        self.assertTrue(week.complete)
+
+    def test_week_complete_toggle_off(self):
+        user = UserFactory()
+
+        self.c.post(reverse("complete", args=[2001, 32, user.id]), data={})
+        week = Week.objects.get(user=user, week=32)
+        self.assertFalse(week.complete)
