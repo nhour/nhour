@@ -22,7 +22,6 @@ def index_redirect(request):
     today = datetime.datetime.today()
     return edit_week(request, today.year, today.isocalendar()[1], request.user.id)
 
-
 def register(request):
     if request.method == 'POST':
         register_form = RegisterForm(request.POST)

@@ -9,12 +9,18 @@ function createSlider(start) {
         connect: 'lower',
         range: {
             'min':  0.5,
-            'max':  50
+            'max':  40
         },
         step: 0.5,
     });
+
     slider.noUiSlider.on('update', function(values, handle) {
-        selectedHours.textContent = values[handle]
-        hours.value = values[handle]
+        hours.value = values[handle];
+        selectedHours.value = values[handle];
+    });
+
+    $(selectedHours).change(function(event) {
+        newHours = $(event.target).val()
+        slider.noUiSlider.set(newHours);
     });
 }
