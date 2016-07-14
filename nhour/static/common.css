@@ -33,7 +33,7 @@
 
 * {
     font-family: 'Open Sans', sans-serif;
-  }
+}
 
 body {
     background-color: #ECF6FE;
@@ -48,9 +48,12 @@ body {
     margin: 10px auto;
     max-width: 800px;
 }
-#entry-edit-form select, textarea {
+
+#entry-edit-form select,
+textarea {
     width: 100%;
 }
+
 #entry-edit-form textarea {
     resize: none;
 }
@@ -75,8 +78,9 @@ body {
 }
 
 .entry-list {
-    border-collapse:separate;
-    border-spacing:0 8px; width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    width: 100%;
     table-layout: fixed;
     margin-bottom: 8px;
 }
@@ -89,12 +93,14 @@ body {
     margin-top: 8px;
     margin-bottom: 10px;
 }
+
 .entry-list-delete-entry {
-    background:none;
-    border:none;
-    margin:0;
-    padding:0;
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
 }
+
 .entry-list-row {
     margin-bottom: 10px;
     cursor: pointer;
@@ -104,22 +110,22 @@ body {
     background-color: #bbb;
 }
 
-.entry-list-row td{
+.entry-list-row td {
     word-wrap: break-word;
     overflow-y: auto;
     max-height: 30px;
 }
 
-.menu-left{
+.menu-left {
     float: left;
 }
 
-.menu-right{
+.menu-right {
     float: right;
 }
 
 #new-entry-buttons {
-    margin-top: 8px; 
+    margin-top: 8px;
     margin-bottom: 8px;
     display: inline-block;
 }
@@ -134,7 +140,7 @@ body {
 }
 
 .doc-box {
-    word-break:break-all;
+    word-break: break-all;
 }
 
 .doc-box:empty {
@@ -151,16 +157,19 @@ body {
 
 #hours-selected {
     display: inline;
-    width:80px;
+    width: 80px;
 }
 
 #hours-selected::-webkit-inner-spin-button,
 #hours-selected::-webkit-outer-spin-button {
-
-   opacity: 1;
-
+    opacity: 1;
 }
 
 .entry-list-cell {
-    height:40px; overflow:auto;
+    height: 40px;
+    overflow: auto;
+}
+
+.unfinished-week-link {
+    font-size: 80%;
 }

@@ -34,13 +34,14 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
-class Week(models.Model):
+
+class CompletedWeek(models.Model):
     week = IntegerField(validators=[MaxValueValidator(52),
                                     MinValueValidator(1)])
     year = IntegerField(validators=[MaxValueValidator(9999),
                                 MinValueValidator(1000)])
     user = ForeignKey(User, on_delete=models.PROTECT)
-    complete = BooleanField(default=False)
+
 
 class Entry(models.Model):
     week = IntegerField(validators=[MaxValueValidator(52),

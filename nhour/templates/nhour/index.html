@@ -3,6 +3,13 @@
 {% block content %}
 <div class="">
     <div id="container">
+        {% if unfinished_weeks %} 
+            <span class="required">You have previous unfinished weeks!</span>
+            {% for week in unfinished_weeks %}
+              <a href="{% url 'edit_week' week.0 week.1 user.id %}" class="unfinished-week-link">{{ week.0 }} - {{ week.1}}</a>
+            {% endfor %}
+        <br>
+        {% endif %}
         <div class="week-selector">
             {% week_start_date year week%} — {% week_end_date year week%}
         </div>
@@ -11,6 +18,7 @@
             <a href={% previous_week_url year week user.id %}>Previous</a>
             <a href={% next_week_url year week user.id %}>Next</a>
         </div>
+        
         <h2 style="margin-bottom: 2px;">{{ user.first_name }} {{ user.last_name }}</h2>
         <div>
             {% if total_hours %} Total: {{ total_hours }} {% endif %}

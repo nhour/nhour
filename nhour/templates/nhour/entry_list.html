@@ -27,12 +27,14 @@
     <tr>
         <th style="width: 10%;"><i class="fa fa-clock-o"></i></th>
         <th>Activity</th>
+        <th>Comment</th>
     </tr>
     {% for entry in special_entries %}
     <tr class="blueback blueback-lighter entry-list-row"
         data-url="{% url 'edit_week' year week user.id %}?entry={{ entry.id }}">
-        <td style="text-align: center;">{{ entry.hours }}</td>
-        <td>{{ entry.activity }}</td>
+        <td><div class="entry-list-cell">{{ entry.hours }}</div></td>
+        <td><div class="entry-list-cell">{{ entry.activity }}</div></td>
+        <td><div class="entry-list-cell">{{ entry.comment }}</div></td>
     </tr>
     {% endfor %}
 </table>

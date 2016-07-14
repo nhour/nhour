@@ -3,10 +3,11 @@ from random import Random
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
+from django.core.exceptions import ObjectDoesNotExist
 
 import nhour
 from nhour.forms import RegularEntryForm
-from nhour.models import Entry, RegularEntry, System, Project, Task, Week
+from nhour.models import Entry, RegularEntry, System, Project, Task, CompletedWeek
 from nhour.tests.factories import RegularEntryFactory, SpecialEntryFactory, UserFactory
 
 
@@ -93,12 +94,10 @@ class TestEntryEditPage(TestCase):
         user = UserFactory()
 
         self.c.post(reverse("complete", args=[2001, 32, user.id]), data={"complete": "on"})
-        week = Week.objects.get(user=user, week=32)
-        self.assertTrue(week.complete)
+        week = CompletedWeek.objects.get(user=user, week=32)
 
     def test_week_complete_toggle_off(self):
         user = UserFactory()
 
         self.c.post(reverse("complete", args=[2001, 32, user.id]), data={})
-        week = Week.objects.get(user=user, week=32)
-        self.assertFalse(week.complete)
+        self.assertRaises(Exception, CompletedWeek.objects.get, user=user, week=32)
