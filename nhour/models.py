@@ -36,10 +36,10 @@ class Project(models.Model):
 
 
 class CompletedWeek(models.Model):
-    week = IntegerField(validators=[MaxValueValidator(52),
+    week = IntegerField(validators=[MaxValueValidator(53),
                                     MinValueValidator(1)])
     year = IntegerField(validators=[MaxValueValidator(9999),
-                                MinValueValidator(1000)])
+                                    MinValueValidator(1000)])
     user = ForeignKey(User, on_delete=models.PROTECT)
 
 
@@ -48,29 +48,23 @@ class Entry(models.Model):
                                     MinValueValidator(1)])
     year = IntegerField(validators=[MaxValueValidator(9999),
                                     MinValueValidator(1000)])
-    hours = DecimalField(decimal_places=2, max_digits=5, validators=[MaxValueValidator(100),
-                                                                       MinValueValidator(0)])
+    hours = DecimalField(decimal_places=2,
+                         max_digits=5,
+                         validators=[MaxValueValidator(100),
+                                     MinValueValidator(0)])
     user = ForeignKey(User, on_delete=models.PROTECT)
     comment = TextField(max_length=5000, blank=True, null=True)
 
     class Meta:
         ordering = ("-year", "-week")
 
+
 class RegularEntry(Entry):
-    system = ForeignKey(
-        'System',
-        on_delete=models.PROTECT
-    )
+    system = ForeignKey('System', on_delete=models.PROTECT)
     project = ForeignKey(
-        'Project',
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True
-    )
-    task = ForeignKey(
-        'Task',
-        on_delete=models.PROTECT
-    )
+        'Project', on_delete=models.PROTECT,
+        null=True, blank=True)
+    task = ForeignKey('Task', on_delete=models.PROTECT)
 
     class Meta:
         verbose_name_plural = "Regular Entries"
@@ -91,10 +85,7 @@ class Activity(models.Model):
 
 
 class SpecialEntry(Entry):
-    activity = ForeignKey(
-        'Activity',
-        on_delete=models.PROTECT
-    )
+    activity = ForeignKey('Activity', on_delete=models.PROTECT)
 
     class Meta:
         verbose_name_plural = "Special Entries"
