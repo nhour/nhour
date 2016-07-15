@@ -20,6 +20,11 @@ def date_range_of_week(year, week):
     return week.monday(), week.friday()
 
 
+def correct_week_overflow(year, week):
+    week = isoweek.Week(int(year), int(week))
+    return week.year, week.week
+
+
 def entry_shortcuts(user, year, week):
     # Couldn't figure out how to do these using the database.
     max_results = 150

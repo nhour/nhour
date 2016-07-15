@@ -1,4 +1,5 @@
 import datetime
+
 from decimal import Decimal
 
 from django.contrib.auth.decorators import login_required
@@ -14,7 +15,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from nhour.forms import RegularEntryForm, RegisterForm, entry_form_factory, SpecialEntryForm
 from nhour.models import SpecialEntry, RegularEntry, Entry, System, Task, Project, Activity, CompletedWeek
-from nhour.utils import entry_shortcuts, unfinished_weeks_of_user
+from nhour.utils import entry_shortcuts, unfinished_weeks_of_user, correct_week_overflow
 
 
 @login_required()
@@ -52,6 +53,7 @@ def thank_you(request):
 
 @login_required()
 def edit_week(request, year, week, user):
+    year, week = correct_week_overflow(year, week)
 
     entry_id = request.GET.get("entry", None)
     is_special = "True" == request.GET.get("special", "False")
@@ -71,6 +73,8 @@ def _get_old_entry(entry_id):
 
 
 def _make_new_entry(regular, user, week, year):
+    year, week = correct_week_overflow(year, week)
+
     if regular:
         entry = RegularEntry(year=year,
                              week=week,
@@ -83,6 +87,7 @@ def _make_new_entry(regular, user, week, year):
 
 
 def _render_page_with_form(form: Form, request, user, week, year):
+    year, week = correct_week_overflow(year, week)
     regular_entries = RegularEntry.objects.filter(week=week, user=user)
     special_entries = SpecialEntry.objects.filter(week=week, user=user)
 
@@ -168,6 +173,7 @@ def delete_entry(request, entry_id):
 
 @login_required
 def week_complete(request, year, week, user):
+    year, week = correct_week_overflow(year, week)
     complete = request.POST.get("complete", 'off')
     user_object = User.objects.get(id=user)
     if complete == 'off':
@@ -180,10 +186,12 @@ def week_complete(request, year, week, user):
 
 
 def _save_completed_week(year, week, user):
+    year, week = correct_week_overflow(year, week)
     CompletedWeek.objects.get_or_create(year=year, week=week, user=user)
 
 
 def _delete_completed_week_if_exists(year, week, user):
+    year, week = correct_week_overflow(year, week)
     try:
         CompletedWeek.objects.get(year=year, week=week, user=user).delete()
     except:
