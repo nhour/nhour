@@ -19,7 +19,8 @@ class Command(BaseCommand):
         for user, unfinished_weeks in unfinished_users_and_weeks:
 
             if options["test"]:
-                print(user.email, unfinished_weeks)
+                if unfinished_weeks:
+                  print(user.email, unfinished_weeks)
 
             elif not options["test"] and unfinished_weeks:
                 send_mail(
