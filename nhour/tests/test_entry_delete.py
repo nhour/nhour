@@ -1,17 +1,14 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
-import django.middleware.csrf
 
 from nhour.models import Entry
 from nhour.tests.factories import RegularEntryFactory
-from nhour.tests.test_data import TestData
 
 
 class TestEntryDelete(TestCase):
 
     def setUp(self):
-        data = TestData()
         self.entry = RegularEntryFactory()
         self.c = Client()
         self.c.force_login(self.entry.user)
@@ -23,6 +20,4 @@ class TestEntryDelete(TestCase):
     def test_entry_is_deleted_if_existing_id_is_given(self):
         self.c.post(reverse("delete_entry", args=[self.entry.id]))
         self.assertRaises(ObjectDoesNotExist, Entry.objects.get, id=self.entry.id)
-
-
 

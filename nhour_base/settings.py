@@ -11,13 +11,10 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '6ot3nr!0&=_j_*i!^6(^$fvi+8ym1r&z#uv%o+m=dbu7i4moqz'
@@ -26,7 +23,6 @@ SECRET_KEY = '6ot3nr!0&=_j_*i!^6(^$fvi+8ym1r&z#uv%o+m=dbu7i4moqz'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -146,13 +142,15 @@ SESSION_COOKIE_SECURE = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 
-#Extra places for collectstatic to find static files.
-# STATICFILES_DIRS = (
-#     os.path.join(PROJECT_ROOT, '../nhour/static'),
-# )
+
+# In-memory email backend for testing and development
+# EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
+DEFAULT_SENDER = 'test.sender@example.com'
+EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
+EMAIL_URL_LINK = 'www.example.com'
+
 LOGIN_URL = "/login"
 LOGIN_REDIRECT_URL = "/"
-import dj_database_url
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'

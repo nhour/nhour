@@ -14,6 +14,7 @@ def _unique_username():
         if User.objects.filter(username=username_attempt).count() == 0:
             return username_attempt
 
+
 class UserFactory(DjangoModelFactory):
     class Meta:
         model = User

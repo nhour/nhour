@@ -1,8 +1,5 @@
 from __future__ import unicode_literals
-import re
-from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import CharField, TextField, DateField, DateTimeField, ForeignKey, DecimalField, EmailField, \

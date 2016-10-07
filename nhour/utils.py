@@ -72,3 +72,7 @@ def unfinished_weeks_of_user(user):
     }
 
     return weeks - completed_weeks
+
+
+def unfinished_weeks_of_users(users):
+    return [(user, unfinished_weeks_of_user(user)) for user in users]
