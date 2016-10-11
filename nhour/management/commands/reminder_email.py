@@ -31,7 +31,8 @@ class Command(BaseCommand):
                       from_email=settings.EMAIL_SENDER,
                       recipient_list=[user.email]
                   )
-                  print('Emails sent to above addresses.')
-              else:
-                  print('The emails would be sent to above addresses. Add the --send flag to the command to send them.')
+        if options["send"]:
+            print('Emails sent to above addresses.')
+        else:
+            print('The emails would be sent to above addresses. Add the --send flag to the command to send them.')
 
