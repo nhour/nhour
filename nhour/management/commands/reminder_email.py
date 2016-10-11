@@ -12,7 +12,7 @@ class Command(BaseCommand):
             action='store_true',
             default=False,
             dest='send',
-            help='print a list of the email addresses that would recieve a reminder message',
+            help='Actually send the emails.',
         )
     def handle(self, *args, **options):
         unfinished_users_and_weeks = unfinished_weeks_of_users(User.objects.filter(is_active=True))
@@ -31,4 +31,7 @@ class Command(BaseCommand):
                       from_email=settings.EMAIL_SENDER,
                       recipient_list=[user.email]
                   )
+                  print('Emails sent to above addresses.')
+              else:
+                  print('The emails would be sent to above addresses. Add the --send flag to the command to send them.')
 
