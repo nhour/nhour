@@ -28,7 +28,7 @@ class Command(BaseCommand):
                   send_mail(
                       subject='You have unfinished weeks!',
                       message='You have unfinished weeks! Please complete them as soon as possible.\n{}'.format(settings.EMAIL_URL_LINK),
-                      from_email=settings.DEFAULT_SENDER,
+                      from_email=settings.EMAIL_SENDER,
                       recipient_list=[user.email]
                   )
 

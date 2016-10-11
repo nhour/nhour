@@ -145,7 +145,7 @@ X_FRAME_OPTIONS = 'DENY'
 
 # In-memory email backend for testing and development
 # EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
-DEFAULT_SENDER = 'test.sender@example.com'
+EMAIL_SENDER = 'test.sender@example.com'
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 EMAIL_URL_LINK = 'www.example.com'
 

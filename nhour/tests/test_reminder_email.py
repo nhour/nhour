@@ -34,7 +34,7 @@ class TestReminderEmail(TestCase):
     def test_email_sender_is_correct(self):
         user = self._user_with_unfinished_weeks()
         call_command('reminder_email', '--send')
-        self.assertEqual(mail.outbox[0].from_email, settings.DEFAULT_SENDER)
+        self.assertEqual(mail.outbox[0].from_email, settings.EMAIL_SENDER)
 
     def test_inactive_user_is_not_sent_email(self):
         user = self._user_with_unfinished_weeks()
