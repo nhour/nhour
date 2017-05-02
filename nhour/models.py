@@ -69,6 +69,11 @@ class RegularEntry(Entry):
     def __eq__(self, other):
         return isinstance(other, Entry) and other.id == self.id
 
+    @staticmethod
+    def get_entries_of_week(user, year, week):
+        return RegularEntry.objects.filter(year=year, week=week, user=user)
+
+
 
 class Activity(models.Model):
     name = CharField(max_length=100)
@@ -86,3 +91,7 @@ class SpecialEntry(Entry):
 
     class Meta:
         verbose_name_plural = "Special Entries"
+
+    @staticmethod
+    def get_entries_of_week(user, year, week):
+        return SpecialEntry.objects.filter(year=year, week=week, user=user)

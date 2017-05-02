@@ -88,8 +88,8 @@ def _make_new_entry(regular, user, week, year):
 
 def _render_page_with_form(form: Form, request, user, week, year):
     year, week = correct_week_overflow(year, week)
-    regular_entries = RegularEntry.objects.filter(week=week, user=user)
-    special_entries = SpecialEntry.objects.filter(week=week, user=user)
+    regular_entries = RegularEntry.get_entries_of_week(user, year, week)
+    special_entries = SpecialEntry.get_entries_of_week(user, year, week)
 
     systems = serializers.serialize("json", System.objects.all())
     projects = serializers.serialize("json", Project.objects.all())
