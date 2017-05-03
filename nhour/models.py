@@ -9,7 +9,7 @@ from django.db.models.fields import IntegerField
 
 class System(models.Model):
     name = CharField(max_length=100)
-    description = TextField(max_length=600, blank=True)
+    description = TextField(max_length=700, blank=True)
 
     def __str__(self):
         return self.name

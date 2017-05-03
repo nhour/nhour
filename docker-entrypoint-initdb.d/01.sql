@@ -1,0 +1,1 @@
+GRANT ALL PRIVILEGES ON DATABASE "nhour-2" to nhour;

@@ -16,14 +16,7 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6ot3nr!0&=_j_*i!^6(^$fvi+8ym1r&z#uv%o+m=dbu7i4moqz'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['web']
 # Application definition
 
 INSTALLED_APPS = [
@@ -84,17 +77,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'nhour_base.wsgi.application'
 
+DEBUG = False
+SECRET_KEY = os.environ['NHOUR_SECRET_KEY']
+DB_PASSWORD = os.environ['NHOUR_DB_PASSWORD']
+DB_USER = os.environ['NHOUR_DB_USER']
 
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ['NHOUR_EMAIL_HOST']
+EMAIL_SENDER = os.environ['NHOUR_EMAIL_SENDER']
+EMAIL_URL_LINK = os.environ['NHOUR_URL_LINK']  # Link to the app
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'nhour-2',
+        'USER': "nhour",
+        'PASSWORD': DB_PASSWORD,
+        'HOST': 'postgres',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -141,13 +143,6 @@ CSFR_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
-
-
-# In-memory email backend for testing and development
-# EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
-EMAIL_SENDER = 'test.sender@example.com'
-EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
-EMAIL_URL_LINK = 'www.example.com'
 
 LOGIN_URL = "/login"
 LOGIN_REDIRECT_URL = "/"
